@@ -1,0 +1,26 @@
+{
+  "name": "javascript-streaming-coder",
+  "version": "1.0.0",
+  "description": "Proyecto JavaScript para curso de coderhouse desarrollo web full stack",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "sass scss/style.scss css/style.css",
+    "watch-css": "sass --watch scss/style.scss css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Martin-Cazorla/javascript-streaming-coder.git"
+  },
+  "keywords": [],
+  "author": "Martin Cazorla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Martin-Cazorla/javascript-streaming-coder/issues"
+  },
+  "homepage": "https://github.com/Martin-Cazorla/javascript-streaming-coder#readme",
+  "devDependencies": {
+    "sass": "^1.83.0"
+  }
+}
