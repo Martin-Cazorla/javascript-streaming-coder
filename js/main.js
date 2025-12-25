@@ -32,7 +32,6 @@ function seleccionarPeliculas() {
 
         let entrada = prompt(menu);
 
-        // Corrección: Si el usuario presiona "Cancelar", salimos del bucle
         if (entrada === null) {
             break;
         }
