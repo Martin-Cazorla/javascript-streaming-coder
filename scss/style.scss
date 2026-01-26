@@ -21,7 +21,7 @@ body {
     overflow-x: hidden;
 }
 
-// Navegación Profesional
+// Navegación
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -129,7 +129,7 @@ body {
     }
 }
 
-// Botón de Acción (Simulador)
+// Botón de Acción 
 .btn-primary {
     background: $color-primario;
     color: white;
@@ -151,7 +151,7 @@ body {
 }
 
 .main-footer {
-    background-color: darken($color-fondo, 5%); // Un tono más oscuro que el fondo
+    background-color: darken($color-fondo, 5%);
     padding: 4rem 10% 2rem;
     border-top: 1px solid rgba($color-primario, 0.2);
     text-align: center;

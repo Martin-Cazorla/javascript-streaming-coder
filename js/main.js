@@ -11,9 +11,7 @@ const catalogoPeliculas = [
 
 let listaSeleccionada = [];
 
-/**
- * PROCESAMIENTO: Selección de productos
- */
+/* PROCESAMIENTO: Selección de productos */
 function seleccionarPeliculas() {
     alert("¡Bienvenido a KaijuStream! Vamos a armar tu lista de alquiler."); 
     
@@ -42,7 +40,7 @@ function seleccionarPeliculas() {
 
 /**
  * PROCESAMIENTO: Cálculos matemáticos
- * @returns {Object} Objeto con los cálculos realizados
+ * @returns {Object} 
  */
 function calcularCostos() {
     const subtotal = listaSeleccionada.reduce((acc, peli) => acc + peli.precio, 0);
@@ -60,9 +58,7 @@ function calcularCostos() {
     };
 }
 
-/**
- * SALIDA: Reporte en consola y alerta
- */
+/* SALIDA: Reporte en consola y alerta */
 function mostrarResumen(resumen) {
     console.clear();
     console.log("%c--- RESUMEN DE COMPRA ---", "color: #FF4655; font-weight: bold;");
