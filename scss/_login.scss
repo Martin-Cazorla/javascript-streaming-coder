@@ -1,0 +1,99 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: radial-gradient(circle, transparent 20%, $secondary-color 100%),
+                url('../assets/img/img-animes-juntos.jpg') no-repeat center center/cover;
+
+    .login-card {
+        background-color: rgba(0, 0, 0, 0.75); 
+        padding: 3.5rem; 
+        border-radius: 4px;
+        width: 100%;
+        max-width: 450px; 
+        box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+        border-bottom: 3px solid $primary-color; 
+
+        h1 {
+            margin-bottom: 1.5rem;
+            text-align: left; 
+            color: $primary-color;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2rem;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #b3b3b3; 
+        }
+
+        input {
+            width: 100%;
+            height: 50px; 
+            padding: 0.75rem;
+            border-radius: 4px;
+            border: none;
+            border-bottom: 2px solid transparent; 
+            background-color: #333; 
+            color: white;
+            transition: all 0.3s ease;
+
+            &:focus {
+                outline: none;
+                background-color: #454545;
+                border-bottom: 2px solid #e87c03; 
+            }
+        }
+
+        .help-text {
+            display: block;
+            font-size: 0.75rem;
+            color: #737373;
+            margin-top: 0.4rem;
+        }
+    }
+
+    .btn-login {
+        width: 100%;
+        padding: 1rem;
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 1rem;
+        transition: transform 0.2s, background 0.3s;
+
+        &:hover {
+            background-color: darken($primary-color, 10%);
+            transform: scale(1.01); 
+        }
+    }
+
+    // Bloque de pie de formulario 
+    .login-footer {
+        margin-top: 1.5rem;
+        text-align: center;
+        color: #737373; 
+        font-size: 0.9rem;
+        
+        a {
+            color: #e50914; 
+            font-weight: bold;
+            &:hover {
+                color: lighten(#e50914, 10%); 
+            }
+        }
+    }
+}

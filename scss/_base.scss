@@ -1,0 +1,53 @@
+// Reset
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+body {
+    font-family: $font-main;
+    color: $text-light;
+    background-color: $secondary-color;
+    background: linear-gradient($overlay-dark, $overlay-dark), 
+                url('../assets/img/img-animes-juntos.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+// Botón con borde 
+.btn-secondary-outline {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+}
+
+// alinear el header
+.navbar-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
+}

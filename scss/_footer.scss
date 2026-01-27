@@ -1,0 +1,89 @@
+/* _footer.scss */
+
+.main-footer {
+    background-color: rgba(0, 0, 0, 0.9); 
+    padding: 3rem 0 1.5rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid rgba($primary-color, 0.3); 
+    color: #b3b3b3;
+
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .footer-logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: white;
+        letter-spacing: 2px;
+        margin-bottom: 0.5rem;
+
+        span {
+            color: $primary-color; 
+        }
+    }
+
+    .footer-slogan {
+        font-size: 0.9rem;
+        font-style: italic;
+    }
+
+    .nav-group h4 {
+        color: white;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+
+        a {
+            color: #b3b3b3;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+
+            &:hover {
+                color: $primary-color;
+                transform: translateY(-3px); 
+            }
+        }
+    }
+
+    .footer-bottom {
+        width: 100%;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        
+        .copyright {
+            font-size: 0.8rem;
+            
+            span {
+                color: white;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+// Media Query para pantallas grandes 
+@media (min-width: $tablet) {
+    .main-footer .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+        align-items: flex-start;
+    }
+    
+    .main-footer .footer-bottom {
+        text-align: center;
+    }
+}
