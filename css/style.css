@@ -7,8 +7,8 @@
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #ffffff;
-  background-color: #1f1f1f;
-  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url("../assets/img/img-animes-juntos.jpg") no-repeat center center fixed;
+  background-color: #0f0c29;
+  background: linear-gradient(rgba(15, 12, 41, 0.85), rgba(15, 12, 41, 0.85)), url("../assets/img/img-animes-juntos.jpg") no-repeat center center fixed;
   background-size: cover;
   min-height: 100vh;
 }
@@ -87,14 +87,14 @@ img {
   transform: translateY(-10px);
 }
 .features .feature-card h3 {
-  color: #e50914;
+  color: #9d4edd;
   margin-bottom: 0.5rem;
 }
 
 .btn-primary {
   padding: 1rem 2.5rem;
   font-size: 1.2rem;
-  background-color: #e50914;
+  background-color: #9d4edd;
   color: white;
   border: none;
   border-radius: 5px;
@@ -104,8 +104,8 @@ img {
   transition: 0.3s ease;
 }
 .btn-primary:hover {
-  background-color: rgb(179.9285714286, 7.0714285714, 15.7142857143);
-  box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+  background-color: rgb(132.8151658768, 39.9620853081, 208.0379146919);
+  box-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
 }
 
 .navbar {
@@ -122,7 +122,7 @@ img {
   color: white;
 }
 .navbar .logo span {
-  color: #e50914;
+  color: #9d4edd;
 }
 
 .login-container {
@@ -131,7 +131,7 @@ img {
   align-items: center;
   min-height: 100vh;
   padding: 20px;
-  background: radial-gradient(circle, transparent 20%, #1f1f1f 100%), url("../assets/img/img-animes-juntos.jpg") no-repeat center center/cover;
+  background: radial-gradient(circle, transparent 20%, #0f0c29 100%), url("../assets/img/img-animes-juntos.jpg") no-repeat center center/cover;
 }
 .login-container .login-card {
   background-color: rgba(0, 0, 0, 0.75);
@@ -140,12 +140,12 @@ img {
   width: 100%;
   max-width: 450px;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
-  border-bottom: 3px solid #e50914;
+  border-bottom: 3px solid #9d4edd;
 }
 .login-container .login-card h1 {
   margin-bottom: 1.5rem;
   text-align: left;
-  color: #e50914;
+  color: #9d4edd;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 2rem;
@@ -184,7 +184,7 @@ img {
 .login-container .btn-login {
   width: 100%;
   padding: 1rem;
-  background-color: #e50914;
+  background-color: #9d4edd;
   color: white;
   border: none;
   border-radius: 4px;
@@ -195,7 +195,7 @@ img {
   transition: transform 0.2s, background 0.3s;
 }
 .login-container .btn-login:hover {
-  background-color: rgb(179.9285714286, 7.0714285714, 15.7142857143);
+  background-color: rgb(132.8151658768, 39.9620853081, 208.0379146919);
   transform: scale(1.01);
 }
 .login-container .login-footer {
@@ -205,11 +205,11 @@ img {
   font-size: 0.9rem;
 }
 .login-container .login-footer a {
-  color: #e50914;
+  color: #9d4edd;
   font-weight: bold;
 }
 .login-container .login-footer a:hover {
-  color: rgb(246.6428571429, 42.3571428571, 52.5714285714);
+  color: rgb(192.5308056872, 142.172985782, 233.327014218);
 }
 
 /* _footer.scss */
@@ -217,7 +217,7 @@ img {
   background-color: rgba(0, 0, 0, 0.9);
   padding: 3rem 0 1.5rem 0;
   margin-top: 4rem;
-  border-top: 1px solid rgba(229, 9, 20, 0.3);
+  border-top: 1px solid rgba(157, 78, 221, 0.3);
   color: #b3b3b3;
 }
 .main-footer .footer-content {
@@ -235,7 +235,7 @@ img {
   margin-bottom: 0.5rem;
 }
 .main-footer .footer-logo span {
-  color: #e50914;
+  color: #9d4edd;
 }
 .main-footer .footer-slogan {
   font-size: 0.9rem;
@@ -260,7 +260,7 @@ img {
   transition: color 0.3s ease, transform 0.3s ease;
 }
 .main-footer .social-links a:hover {
-  color: #e50914;
+  color: #9d4edd;
   transform: translateY(-3px);
 }
 .main-footer .footer-bottom {

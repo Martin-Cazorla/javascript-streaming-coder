@@ -89,10 +89,10 @@
         font-size: 0.9rem;
         
         a {
-            color: #e50914; 
+            color: $primary-color; 
             font-weight: bold;
             &:hover {
-                color: lighten(#e50914, 10%); 
+                color: lighten($primary-color, 15%);
             }
         }
     }
