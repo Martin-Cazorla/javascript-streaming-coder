@@ -173,7 +173,7 @@ img {
 .login-container .form-group input:focus {
   outline: none;
   background-color: #454545;
-  border-bottom: 2px solid #e87c03;
+  border-bottom: 2px solid #9d4edd;
 }
 .login-container .form-group .help-text {
   display: block;
