@@ -100,7 +100,6 @@ function renderizarResumen() {
 }
 
 /* CONTROLADOR DE INICIO */
-// Ejecutamos las funciones principales cuando el navegador termina de cargar el HTML
 document.addEventListener('DOMContentLoaded', () => {
     renderizarPlanes();
     renderizarResumen();
