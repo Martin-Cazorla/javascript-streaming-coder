@@ -1,93 +1,107 @@
 /* CONFIGURACIÓN Y DATOS */
+// Constantes para valores fijos del sistema
 const IVA = 0.21;
-const DESCUENTO_NUEVO = 0.15;
 
-const catalogoPeliculas = [
-    { id: 1, titulo: "Demon Slayer: Infinity Castle", precio: 1500 },
-    { id: 2, titulo: "Demon Slayer: Mugen Train", precio: 1200 },
-    { id: 3, titulo: "Your Name", precio: 1100 },
-    { id: 4, titulo: "El viaje de Chihiro", precio: 1000 }
+// Objeto con la oferta de suscripciones disponible
+const planesSuscripcion = [
+    { 
+        id: "basico", 
+        nombre: "Plan Génesis (Básico)", 
+        precios: { semana: 300, mes: 900, año: 9000 },
+        beneficios: "1 Pantalla, Calidad SD" 
+    },
+    { 
+        id: "estandar", 
+        nombre: "Plan Evolución (Estándar)", 
+        precios: { semana: 500, mes: 1500, año: 15000 },
+        beneficios: "2 Pantallas, Calidad HD" 
+    },
+    { 
+        id: "premium", 
+        nombre: "Plan Apocalipsis (Premium)", 
+        precios: { semana: 800, mes: 2200, año: 22000 },
+        beneficios: "4 Pantallas, Calidad 4K + HDR" 
+    }
 ];
 
-/* PROCESAMIENTO: Selección de productos */
-/**
-    @returns {Array}  
- */
-function seleccionarPeliculas() {
-    alert("¡Bienvenido a KaijuStream! Vamos a armar tu lista de alquiler."); 
-    
-    const seleccion = []; 
-    let continuar = true;
+/* PROCESAMIENTO: Cálculos matemáticos */
+const calcularTotal = (precioBase) => (precioBase * (1 + IVA)).toFixed(2);
 
-    while (continuar) {
-        let menu = "Escribe el ID de la película:\n\n";
-        catalogoPeliculas.forEach(p => menu += `${p.id}. ${p.titulo} ($${p.precio})\n`);
+/* PROCESAMIENTO: Manejo del DOM */
+function renderizarPlanes() {
+    const contenedor = document.getElementById('contenedor-planes');
 
-        let entrada = prompt(menu);
+    if (!contenedor) return;
 
-        if (entrada === null) break; 
+    // Limpia el contenedor por seguridad
+    contenedor.innerHTML = ""; 
 
-        let idSeleccionado = parseInt(entrada);
-        const peliEncontrada = catalogoPeliculas.find(p => p.id === idSeleccionado);
-
-        if (peliEncontrada) {
-            seleccion.push(peliEncontrada);
-            alert(`✅ "${peliEncontrada.titulo}" agregada.`);
-        } else {
-            alert("⚠️ ID no válido. Por favor, ingresa un número del catálogo.");
-        }
-
-        continuar = confirm("¿Quieres agregar otra película?");
-    }
-    return seleccion; 
-}
-
-/**
- * PROCESAMIENTO: Cálculos matemáticos
-    @param {Array} lista 
-    @returns {Object} 
- */
-function calcularCostos(lista) {
-    const subtotal = lista.reduce((acc, peli) => acc + peli.precio, 0);
-    
-    const esNuevo = confirm("¿Es tu primera vez? (15% de descuento)");
-    const montoDescuento = esNuevo ? subtotal * DESCUENTO_NUEVO : 0;
-    
-    const subtotalConDescuento = subtotal - montoDescuento;
-    const totalFinal = subtotalConDescuento * (1 + IVA);
-
-    return {
-        subtotal,
-        descuento: montoDescuento,
-        total: totalFinal.toFixed(2) 
-    };
-}
-
-/* Reporte en consola y alerta */
-function mostrarResumen(lista, resumen) {
-    console.clear();
-    console.log("%c--- RESUMEN DE COMPRA ---", "color: #FF4655; font-weight: bold;");
-    
-    // Listado de ítems seleccionados
-    lista.forEach((p, i) => console.log(`${i+1}. ${p.titulo}`));
-    
-    console.table(resumen); 
-    
-    alert(`Proceso finalizado.\nTotal a pagar (con IVA): $${resumen.total}`);
-}
-
-/* CONTROLADOR DE EVENTOS PRINCIPAL */
-const btnComenzar = document.getElementById('btn-comenzar');
-
-if (btnComenzar) {
-    btnComenzar.addEventListener('click', () => {
-        const listaSeleccionada = seleccionarPeliculas();
-
-        if (listaSeleccionada.length > 0) {
-            const resultados = calcularCostos(listaSeleccionada);
-            mostrarResumen(listaSeleccionada, resultados);
-        } else {
-            alert("No seleccionaste ninguna película.");
-        }
+    // Contenido visual (Planes)
+    planesSuscripcion.forEach(plan => {
+        const card = document.createElement('article');
+        card.className = 'feature-card';
+        
+        // Contenido dinámico con los 3 botones de pago
+        card.innerHTML = `
+            <h3>${plan.nombre}</h3>
+            <p>${plan.beneficios}</p>
+            <div class="opciones-precio" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn-secondary-outline" onclick="seleccionarPlan('${plan.id}', 'semana')">Semanal: $${plan.precios.semana}</button>
+                <button class="btn-secondary-outline" onclick="seleccionarPlan('${plan.id}', 'mes')">Mensual: $${plan.precios.mes}</button>
+                <button class="btn-secondary-outline" onclick="seleccionarPlan('${plan.id}', 'año')">Anual: $${plan.precios.año}</button>
+            </div>
+        `;
+        contenedor.appendChild(card);
     });
 }
+
+/* PROCESAMIENTO: Gestión de Selección y Storage */
+window.seleccionarPlan = (idPlan, periodo) => {
+    const plan = planesSuscripcion.find(p => p.id === idPlan);
+    
+    // Información de la compra
+    const suscripcionElegida = {
+        nombre: plan.nombre,
+        periodo: periodo,
+        precioBase: plan.precios[periodo]
+    };
+
+    localStorage.setItem('suscripcion_activa', JSON.stringify(suscripcionElegida));
+    
+    // Mostrar resumen
+    renderizarResumen();
+};
+
+/* SALIDA: Renderizado del Resumen */
+function renderizarResumen() {
+    const contenedorResumen = document.getElementById('resumen-suscripcion');
+    
+    // Recuperar datos del Storage
+    const datos = JSON.parse(localStorage.getItem('suscripcion_activa'));
+
+    if (!datos || !contenedorResumen) return;
+
+    // Mostrar el ticket de suscripción
+    contenedorResumen.innerHTML = `
+        <div class="feature-card" style="border: 2px solid #9d4edd; margin-top: 2rem; background: rgba(15, 12, 41, 0.95);">
+            <h3 style="color: #9d4edd;">¡Suscripción Confirmada!</h3>
+            <p><strong>Plan:</strong> ${datos.nombre}</p>
+            <p><strong>Modalidad:</strong> ${datos.periodo.toUpperCase()}</p>
+            <p><strong>Total con IVA:</strong> $${calcularTotal(datos.precioBase)}</p>
+            <button id="btn-cancelar" class="btn-primary" style="margin-top: 1rem; width: 100%;">Cerrar Suscripción</button>
+        </div>
+    `;
+
+    // botón de cancelar para borrar el Storage
+    document.getElementById('btn-cancelar').addEventListener('click', () => {
+        localStorage.removeItem('suscripcion_activa');
+        contenedorResumen.innerHTML = "";
+    });
+}
+
+/* CONTROLADOR DE INICIO */
+// Ejecutamos las funciones principales cuando el navegador termina de cargar el HTML
+document.addEventListener('DOMContentLoaded', () => {
+    renderizarPlanes();
+    renderizarResumen();
+});
