@@ -23,20 +23,8 @@
         <section class="hero" id="hero-section">
             <div class="hero-content">
                 <h1>El universo del Anime en un solo lugar</h1>
-                <p>Gestiona tu suscripción y elige tus títulos favoritos.</p>
-                
-                <div class="features">
-                    <article class="feature-card">
-                        <h3>Catálogo Premium</h3>
-                        <p>Acceso a películas en HD.</p>
-                    </article>
-                    <article class="feature-card">
-                        <h3>Sin Anuncios</h3>
-                        <p>Disfruta sin interrupciones.</p>
-                    </article>
-                </div>
-
-                <button id="btn-comenzar" class="btn-primary">Ver Catálogo</button>
+                <p>Descubre un catálogo curado y elige el plan que mejor se adapte a tu instinto.</p>
+                <button id="btn-comenzar" class="btn-primary">Ver Planes Disponibles</button>
             </div>
         </section>
 
@@ -46,24 +34,16 @@
                 <div id="datos-usuario" class="card">
                     <h3>Datos Actuales</h3>
                     <p><strong>Email:</strong> <span id="info-email">---</span></p>
-                    <p><strong>Plan:</strong> <span id="info-plan">Estándar</span></p>
-                    <button id="btn-editar-perfil" class="btn-small">Editar Datos</button>
+                    <p><strong>Plan Actual:</strong> <span id="info-plan">Ninguno</span></p>
+                    <button id="btn-editar-perfil" class="btn-small">Editar Cuenta</button>
                 </div>
 
                 <div id="form-edicion" class="card" style="display: none;">
-                    <h3>Modificar Suscripción</h3>
+                    <h3>Modificar Cuenta</h3>
                     <form id="updateForm">
                         <div class="form-group">
                             <label for="new-email">Nuevo Correo:</label>
                             <input type="email" id="new-email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="new-plan">Cambiar Plan:</label>
-                            <select id="new-plan">
-                                <option value="Básico">Básico - $1000</option>
-                                <option value="Estándar">Estándar - $1500</option>
-                                <option value="Premium">Premium - $2500</option>
-                            </select>
                         </div>
                         <div class="button-group">
                             <button type="submit" class="btn-save">Guardar Cambios</button>
@@ -75,16 +55,11 @@
         </section>
 
         <section id="seccion-catalogo" class="container section-padding" style="display: none;">
-            <h2>Catálogo Disponible</h2>
-            <div id="contenedor-catalogo" class="pelis-grid">
+            <h2 style="text-align: center;">Elige tu Plan de Batalla</h2>
+            <div id="contenedor-planes" class="pelis-grid">
                 </div>
             <div id="resumen-compra" class="resumen-card">
                 </div>
-        </section>
-
-        <section class="info-proyecto" aria-labelledby="titulo-sobre-simulador">
-            <h2 id="titulo-sobre-simulador">Sobre el Simulador</h2>
-            <p><strong>KaijuStream</strong> permite ahora la gestión completa de usuarios (CRUD) y selección dinámica de productos.</p>
         </section>
     </main>
 
@@ -94,11 +69,7 @@
                 <div class="footer-logo">KAIJU<span>STREAM</span></div>
                 <p class="footer-slogan">Tu portal de anime favorito.</p>
             </div>
-            <div class="footer-bottom">
-                <p class="copyright">
-                    &copy; 2026 KaijuStream | Desarrollado por <span>Cazorlastudio</span>
-                </p>
-            </div>
+            <p class="copyright">&copy; 2026 KaijuStream | Desarrollado por <span>Cazorlastudio</span></p>
         </div>
     </footer>
 

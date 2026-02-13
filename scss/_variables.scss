@@ -2,11 +2,18 @@
 $primary-color: #9d4edd;   
 $secondary-color: #0f0c29;  
 $text-light: #ffffff;
+$text-muted: #b3b3b3;
 $overlay-dark: rgba(15, 12, 41, 0.85); 
+
+// Colores funcionales
+$color-danger: #ff4655;
+$color-success: #00cf65;
+$card-bg: rgba(255, 255, 255, 0.05);
+$card-border: rgba(255, 255, 255, 0.1);
 
 // Tipografías
 $font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-// Breakpoints para Responsive
+// Breakpoints
 $tablet: 768px;
 $desktop: 1024px;

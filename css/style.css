@@ -47,12 +47,25 @@ img {
   padding: 1rem 20px;
 }
 
+.user-info {
+  color: #9d4edd;
+  font-weight: bold;
+  margin-right: 1.5rem;
+  font-size: 0.9rem;
+  text-transform: lowercase;
+}
+
+.section-padding {
+  padding: 60px 0;
+}
+
+/* Hero Section */
 .hero {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 100px 20px;
+  padding: 160px 20px 100px 20px;
   min-height: 80vh;
 }
 .hero .hero-content {
@@ -68,46 +81,7 @@ img {
   margin-bottom: 2rem;
 }
 
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-bottom: 3rem;
-}
-.features .feature-card {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2rem;
-  border-radius: 12px;
-  -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s;
-}
-.features .feature-card:hover {
-  transform: translateY(-10px);
-}
-.features .feature-card h3 {
-  color: #9d4edd;
-  margin-bottom: 0.5rem;
-}
-
-.btn-primary {
-  padding: 1rem 2.5rem;
-  font-size: 1.2rem;
-  background-color: #9d4edd;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: 0.3s ease;
-}
-.btn-primary:hover {
-  background-color: rgb(132.8151658768, 39.9620853081, 208.0379146919);
-  box-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
-}
-
+/* Navbar */
 .navbar {
   position: absolute;
   top: 0;
@@ -123,6 +97,127 @@ img {
 }
 .navbar .logo span {
   color: #9d4edd;
+}
+
+/* Grid de Planes y Tarjetas */
+.pelis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.feature-card:hover {
+  transform: translateY(-10px);
+  border-color: #9d4edd;
+  box-shadow: 0 10px 30px rgba(157, 78, 221, 0.2);
+}
+.feature-card h3 {
+  color: #9d4edd;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.feature-card p {
+  color: #b3b3b3;
+  margin-bottom: 1.5rem;
+}
+
+/* Botones */
+.btn-primary, .btn-primary-small {
+  background-color: #9d4edd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.3s ease;
+}
+.btn-primary:hover, .btn-primary-small:hover {
+  background-color: rgb(132.8151658768, 39.9620853081, 208.0379146919);
+  box-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
+}
+
+.btn-primary {
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+}
+
+.btn-primary-small {
+  padding: 0.8rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* Perfil y CRUD */
+.perfil-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 2rem 0;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  border-radius: 10px;
+  border-left: 4px solid #9d4edd;
+}
+.card h3 {
+  margin-bottom: 1rem;
+  color: #9d4edd;
+}
+.card .form-group {
+  margin-bottom: 1rem;
+}
+.card .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #b3b3b3;
+}
+.card .form-group input, .card .form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  background: #222;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 4px;
+}
+.card .form-group input:focus, .card .form-group select:focus {
+  border-color: #9d4edd;
+  outline: none;
+}
+
+.resumen-card {
+  margin-top: 3rem;
+  max-width: 500px;
+  margin: 3rem auto;
+}
+
+.btn-save {
+  background-color: #00cf65;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #ff4655;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .login-container {

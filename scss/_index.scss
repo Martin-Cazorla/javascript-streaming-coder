@@ -1,20 +1,19 @@
+/* Hero Section */
 .hero {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 100px 20px;
+    padding: 160px 20px 100px 20px; 
     min-height: 80vh;
 
     .hero-content {
         max-width: 800px;
-
         h1 {
             font-size: 3.5rem; 
             margin-bottom: 1rem;
             font-weight: 800;
         }
-
         p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
@@ -22,49 +21,7 @@
     }
 }
 
-.features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-    gap: 20px;
-    margin-bottom: 3rem;
-
-    .feature-card {
-        background: rgba(255, 255, 255, 0.1); 
-        padding: 2rem;
-        border-radius: 12px;
-        backdrop-filter: blur(5px); 
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: transform 0.3s;
-
-        &:hover {
-            transform: translateY(-10px);
-        }
-
-        h3 {
-            color: $primary-color;
-            margin-bottom: 0.5rem;
-        }
-    }
-}
-
-.btn-primary {
-    padding: 1rem 2.5rem;
-    font-size: 1.2rem;
-    background-color: $primary-color;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: 0.3s ease;
-
-    &:hover {
-        background-color: darken($primary-color, 10%);
-        box-shadow: 0 0 20px rgba($primary-color, 0.5);
-    }
-}
-
+/* Navbar */
 .navbar {
     position: absolute; 
     top: 0;
@@ -80,3 +37,98 @@
         span { color: $primary-color; }
     }
 }
+
+/* Grid de Planes y Tarjetas */
+.pelis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 2rem;
+}
+
+.feature-card {
+    background: $card-bg;
+    padding: 2.5rem 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid $card-border;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-10px);
+        border-color: $primary-color;
+        box-shadow: 0 10px 30px rgba($primary-color, 0.2);
+    }
+
+    h3 {
+        color: $primary-color; 
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        color: $text-muted;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Botones */
+.btn-primary, .btn-primary-small {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    
+    &:hover {
+        background-color: darken($primary-color, 10%);
+        box-shadow: 0 0 20px rgba($primary-color, 0.5);
+    }
+}
+
+.btn-primary { padding: 1rem 2.5rem; font-size: 1.2rem; }
+.btn-primary-small { padding: 0.8rem 1.5rem; font-size: 0.9rem; }
+
+/* Perfil y CRUD */
+.perfil-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 2rem 0;
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+    border-left: 4px solid $primary-color;
+
+    h3 { margin-bottom: 1rem; color: $primary-color; }
+    
+    .form-group {
+        margin-bottom: 1rem;
+        label { display: block; margin-bottom: 0.5rem; color: $text-muted; }
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+            &:focus { border-color: $primary-color; outline: none; }
+        }
+    }
+}
+
+.resumen-card {
+    margin-top: 3rem;
+    max-width: 500px;
+    margin: 3rem auto;
+}
+
+.btn-save { background-color: $color-success; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 4px; cursor: pointer; }
+.btn-danger { background-color: $color-danger; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 4px; cursor: pointer; }
