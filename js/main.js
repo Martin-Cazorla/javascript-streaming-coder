@@ -21,6 +21,8 @@ const infoEmail = document.getElementById('info-email');
 const infoPlan = document.getElementById('info-plan');
 const userDisplay = document.getElementById('user-display');
 const updateForm = document.getElementById('updateForm');
+const btnEditarPerfil = document.getElementById('btn-editar-perfil');
+const formEdicionContenedor = document.getElementById('form-edicion');
 
 /* === 3. RENDERIZADO === */
 
@@ -29,14 +31,24 @@ function mostrarPlanes() {
     catalogoPlanes.forEach(plan => {
         const card = document.createElement('div');
         card.className = 'feature-card';
+        
+        // Contenido estático
         card.innerHTML = `
             <h3>${plan.nombre}</h3>
             <p>${plan.detalles}</p>
             <p><strong>Mensual: $${plan.precio}</strong></p>
-            <button class="btn-primary-small" onclick="contratarPlan('${plan.id}')">
-                ${usuarioActivo.planContratado?.id === plan.id ? 'Seleccionado' : 'Contratar'}
-            </button>
         `;
+
+        // Creación de botón con Event Listener 
+        const boton = document.createElement('button');
+        boton.className = 'btn-primary-small';
+        boton.innerText = usuarioActivo.planContratado?.id === plan.id ? 'Seleccionado' : 'Contratar';
+        
+        boton.addEventListener('click', () => {
+            seleccionarPlan(plan.id);
+        });
+
+        card.appendChild(boton);
         contenedorPlanes.appendChild(card);
     });
 }
@@ -47,9 +59,29 @@ function actualizarInterfaz() {
     if (userDisplay) userDisplay.innerText = usuarioActivo.email ? `Hola, ${usuarioActivo.email}` : "";
 }
 
-/* === 4. LÓGICA DE NEGOCIO Y SIMULACIÓN === */
+/* === 4. LÓGICA DE NEGOCIO Y PERSISTENCIA === */
 
-// Iniciar
+// Cargar datos al iniciar
+function cargarDatosStorage() {
+    const datosGuardados = localStorage.getItem('usuarioKaiju');
+    if (datosGuardados) {
+        usuarioActivo = JSON.parse(datosGuardados);
+        if (usuarioActivo.email) {
+            seccionHero.style.display = "none";
+            seccionPerfil.style.display = "block";
+            seccionCatalogo.style.display = "block";
+            actualizarInterfaz();
+            mostrarPlanes();
+            if (usuarioActivo.planContratado && !usuarioActivo.suscrito) {
+                renderizarFactura();
+            } else if (usuarioActivo.suscrito) {
+                document.getElementById('resumen-compra').innerHTML = `<p style="color: #00cf65; text-align: center;">✓ Suscripción activa</p>`;
+            }
+        }
+    }
+}
+
+// Iniciar sistema 
 document.getElementById('btn-comenzar')?.addEventListener('click', () => {
     if (!usuarioActivo.email) usuarioActivo.email = "martincazorla@logistica.com";
     seccionHero.style.display = "none";
@@ -57,24 +89,27 @@ document.getElementById('btn-comenzar')?.addEventListener('click', () => {
     seccionCatalogo.style.display = "block";
     actualizarInterfaz();
     mostrarPlanes();
-    console.log("Sistema iniciado para:", usuarioActivo.email);
+    localStorage.setItem('usuarioKaiju', JSON.stringify(usuarioActivo));
 });
 
-// Selección de Plan
-window.contratarPlan = (id) => {
+// Selección de Plan 
+function seleccionarPlan(id) {
     const planElegido = catalogoPlanes.find(p => p.id === id);
     if (planElegido) {
         usuarioActivo.planContratado = planElegido;
-        console.log("Plan seleccionado temporalmente:", planElegido.nombre);
+        usuarioActivo.suscrito = false;
         actualizarInterfaz();
         mostrarPlanes();
         renderizarFactura();
+        localStorage.setItem('usuarioKaiju', JSON.stringify(usuarioActivo));
     }
-};
+}
 
-// Resumen y Botón de Confirmación Final
+// Resumen de Facturación
 function renderizarFactura() {
     const resumenDiv = document.getElementById('resumen-compra');
+    if (!usuarioActivo.planContratado) return;
+
     const subtotal = usuarioActivo.planContratado.precio;
     const totalConIva = subtotal * (1 + IVA);
     
@@ -92,44 +127,49 @@ function renderizarFactura() {
         </div>
     `;
 
-    // Evento para el nuevo botón creado dinámicamente
     document.getElementById('btn-confirmar-pago').addEventListener('click', finalizarCompra);
 }
 
 function finalizarCompra() {
     usuarioActivo.suscrito = true;
-    const total = (usuarioActivo.planContratado.precio * (1 + IVA)).toFixed(2);
+    localStorage.setItem('usuarioKaiju', JSON.stringify(usuarioActivo));
     
-    // Impacto en consola para el tutor
-    console.log("--- PROCESANDO PAGO ---");
-    console.log("Usuario:", usuarioActivo.email);
-    console.log("Plan Finalizado:", usuarioActivo.planContratado.nombre);
-    console.log("Total Facturado:", total);
-    console.log("Estado: Suscripción Activa ✅");
-
     alert(`¡Gracias por tu compra! Tu ${usuarioActivo.planContratado.nombre} está activo.`);
-    
-    // Limpiamos el resumen tras confirmar
     document.getElementById('resumen-compra').innerHTML = `<p style="color: #00cf65; text-align: center;">✓ Suscripción activa</p>`;
 }
 
-// UPDATE: Cambiar datos
-updateForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    usuarioActivo.email = document.getElementById('new-email').value;
-    console.log("Email actualizado a:", usuarioActivo.email);
-    actualizarInterfaz();
-    document.getElementById('form-edicion').style.display = "none";
+/* === 5. GESTIÓN DE PERFIL === */
+
+// Mostrar formulario de edición
+btnEditarPerfil?.addEventListener('click', () => {
+    formEdicionContenedor.style.display = "block";
+    document.getElementById('new-email').value = usuarioActivo.email;
 });
 
-// DELETE: Cancelar
+// Update: Cambiar Email
+updateForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nuevoEmail = document.getElementById('new-email').value;
+    usuarioActivo.email = nuevoEmail;
+    
+    actualizarInterfaz();
+    formEdicionContenedor.style.display = "none";
+    localStorage.setItem('usuarioKaiju', JSON.stringify(usuarioActivo));
+    console.log("Datos actualizados en Storage.");
+});
+
+// Delete: Cancelar Suscripción
 document.getElementById('btn-cancelar-sub')?.addEventListener('click', () => {
-    if (confirm("¿Seguro que deseas cancelar?")) {
-        console.log("Suscripción cancelada por el usuario.");
+    if (confirm("¿Seguro que deseas cancelar tu suscripción?")) {
         usuarioActivo.planContratado = null;
         usuarioActivo.suscrito = false;
+        
         document.getElementById('resumen-compra').innerHTML = "";
         actualizarInterfaz();
         mostrarPlanes();
+        localStorage.setItem('usuarioKaiju', JSON.stringify(usuarioActivo));
     }
 });
+
+// Ejecución inicial
+cargarDatosStorage();
