@@ -14,7 +14,7 @@
     "url": "git+https://github.com/Martin-Cazorla/javascript-streaming-coder.git"
   },
   "keywords": [],
-  "author": "Martin Cazorla",
+  "author": "Martin Cazorla", 
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Martin-Cazorla/javascript-streaming-coder/issues"

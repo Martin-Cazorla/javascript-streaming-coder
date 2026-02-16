@@ -1,4 +1,4 @@
-/* Hero Section */
+/* HERO */
 .hero {
     display: flex;
     align-items: center;
@@ -23,21 +23,10 @@
     }
 }
 
-/* Ajustes para Tablets/Desktop */
-@media (min-width: 768px) {
-    .hero {
-        padding: 160px 20px 100px 20px;
-        .hero-content {
-            h1 { font-size: 3.5rem; }
-            p { font-size: 1.5rem; }
-        }
-    }
-}
-
-/* Grid de Planes y Tarjetas */
+/* GRID PLANES */
 .pelis-grid {
     display: grid;
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     gap: 20px;
     margin-top: 2rem;
 
@@ -46,28 +35,14 @@
     }
 }
 
-/* Perfil y CRUD */
+/* PERFIL */
 .perfil-grid {
     display: grid;
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     gap: 20px;
     margin: 2rem 0;
 
     @media (min-width: 768px) {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-}
-
-.card {
-    background: rgba(0, 0, 0, 0.65);
-    padding: 1.8rem;
-    border-radius: 14px;
-    border: 1px solid rgba($primary-color, 0.3);
-    backdrop-filter: blur(12px);
-    transition: 0.3s ease;
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 }

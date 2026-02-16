@@ -2,77 +2,54 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <title>KaijuStream</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaijuStream | Tu Portal de Anime</title>
+    <meta name="description" content="KaijuStream: plataforma de anime en streaming.">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-<header class="navbar">
-    <div class="container navbar-flex"> <a href="index.html" class="logo">
-            KAIJU<span>STREAM</span>
-        </a>
-        <nav class="nav-auth">
-            <span id="user-display" class="user-info"></span>
-            <a href="login.html" id="link-login" class="btn-secondary-outline">Iniciar Sesión</a>
-        </nav>
-    </div>
+<div id="app-loader" class="loader hidden" aria-hidden="true">
+    <div class="spinner"></div>
+</div>
+
+<header class="site-header">
+    <h1>KaijuStream</h1>
+
+    <nav class="nav-auth" aria-label="Autenticación usuario">
+        <button id="btn-login">Login</button>
+        <button id="btn-logout" class="hidden">Logout</button>
+    </nav>
 </header>
 
-    <main>
-        <section class="hero" id="hero-section">
-            <div class="hero-content">
-                <h1>El universo del Anime en un solo lugar</h1>
-                <p>Descubre un catálogo curado y elige el plan que mejor se adapte a tu instinto.</p>
-                <button id="btn-comenzar" class="btn-primary">Ver Planes Disponibles</button>
-            </div>
-        </section>
+<main>
+    <section class="hero">
+        <h2>Tu plataforma de anime favorita</h2>
+        <p>Planes accesibles y contenido exclusivo.</p>
+        <button id="btn-comenzar" aria-label="Ver planes disponibles">
+            Comenzar
+        </button>
+    </section>
 
-        <section id="seccion-perfil" class="container section-padding" style="display: none;">
-            <h2>Mi Perfil de Suscriptor</h2>
-            <div class="perfil-grid">
-                <div id="datos-usuario" class="card">
-                    <h3>Datos Actuales</h3>
-                    <p><strong>Email:</strong> <span id="info-email">---</span></p>
-                    <p><strong>Plan Actual:</strong> <span id="info-plan">Ninguno</span></p>
-                    <button id="btn-editar-perfil" class="btn-small">Editar Cuenta</button>
-                </div>
+    <section id="planes-skeleton" class="planes hidden">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+    </section>
 
-                <div id="form-edicion" class="card" style="display: none;">
-                    <h3>Modificar Cuenta</h3>
-                    <form id="updateForm">
-                        <div class="form-group">
-                            <label for="new-email">Nuevo Correo:</label>
-                            <input type="email" id="new-email" required>
-                        </div>
-                        <div class="button-group">
-                            <button type="submit" class="btn-save">Guardar Cambios</button>
-                            <button type="button" id="btn-cancelar-sub" class="btn-danger">Cancelar Suscripción</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
+    <section id="planes-container" class="planes hidden"></section>
 
-        <section id="seccion-catalogo" class="container section-padding" style="display: none;">
-            <h2 style="text-align: center;">Elige tu Plan de Batalla</h2>
-            <div id="contenedor-planes" class="pelis-grid">
-                </div>
-            <div id="resumen-compra" class="resumen-card">
-                </div>
-        </section>
-    </main>
+    <section id="perfil-container" class="hidden"></section>
 
-    <footer class="main-footer">
-        <div class="footer-content container">
-            <div class="footer-brand">
-                <div class="footer-logo">KAIJU<span>STREAM</span></div>
-                <p class="footer-slogan">Tu portal de anime favorito.</p>
-            </div>
-            <p class="copyright">&copy; 2026 KaijuStream | Desarrollado por <span>Cazorlastudio</span></p>
-        </div>
-    </footer>
+</main>
 
-    <script type="module" src="js/main.js"></script>
+<footer class="site-footer">
+    <p>© 2026 KaijuStream</p>
+</footer>
+
+<script type="module" src="js/pages/index.js"></script>
+
 
 </body>
 </html>

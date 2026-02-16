@@ -1,37 +1,45 @@
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 15px; 
-    background: radial-gradient(circle, transparent 20%, $secondary-color 100%),
-                url('../assets/img/img-animes-juntos.jpg') no-repeat center center/cover;
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
 
-    .login-card {
-        background-color: rgba(0, 0, 0, 0.85); 
-        padding: 2rem; 
-        border-radius: 8px;
-        width: 100%;
-        max-width: 400px; 
-        box-shadow: 0 15px 25px rgba(0,0,0,0.5);
-        border-bottom: 3px solid $primary-color; 
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
 
-        @media (min-width: 768px) {
-            padding: 3.5rem;
-        }
+  background: rgba(20, 20, 40, 0.75);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
 
-        h1 {
-            margin-bottom: 1.5rem;
-            text-align: center; 
-            color: $primary-color;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 1.5rem; 
+  animation: fadeIn 0.5s ease;
+}
 
-            @media (min-width: 768px) {
-                font-size: 2rem;
-                text-align: left;
-            }
-        }
+.login-card input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+
+  border-radius: 6px;
+  border: none;
+
+  background: rgba(255,255,255,0.08);
+  color: white;
+
+  transition: 0.2s;
+}
+
+.login-card input:focus {
+  outline: none;
+  background: rgba(255,255,255,0.15);
+}
+
+
+/* Animación suave */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

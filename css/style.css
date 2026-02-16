@@ -1,6 +1,9 @@
+@charset "UTF-8";
 /* ABSTRACTS */
 /* BASE */
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -13,8 +16,7 @@ html {
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #ffffff;
-  background-color: #0f0c29;
-  background: linear-gradient(rgba(15, 12, 41, 0.85), rgba(15, 12, 41, 0.85)), url("../assets/img/img-animes-juntos.jpg") no-repeat center center fixed;
+  background: linear-gradient(rgba(15, 12, 41, 0.85), rgba(15, 12, 41, 0.85)), url("../assets/images/img-animes-juntos.jpg") no-repeat center center fixed;
   background-size: cover;
   min-height: 100vh;
   overflow-x: hidden;
@@ -22,25 +24,16 @@ body {
   flex-direction: column;
 }
 
+/* IMPORTANTE → fija footer abajo */
+main {
+  flex: 1;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
   width: 100%;
-}
-
-.user-info {
-  color: #9d4edd;
-  font-weight: bold;
-  margin-right: 0.5rem;
-  font-size: 0.85rem;
-  word-break: break-all;
-}
-@media (min-width: 768px) {
-  .user-info {
-    margin-right: 1.5rem;
-    font-size: 0.9rem;
-  }
 }
 
 img, video {
@@ -142,7 +135,7 @@ button:active {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
+  padding: 1.8rem;
   backdrop-filter: blur(12px);
   transition: all 0.3s ease;
   position: relative;
@@ -162,7 +155,7 @@ button:active {
   line-height: 1.4;
 }
 .card {
-  /* Glow tipo streaming */
+  /* Glow streaming */
 }
 .card::before {
   content: "";
@@ -175,14 +168,59 @@ button:active {
 .card:hover::before {
   opacity: 1;
 }
-@media (min-width: 768px) {
-  .card {
-    padding: 2rem;
-  }
+
+.plan-card {
+  background: rgba(0, 0, 0, 0.75);
+  padding: 20px;
+  border-radius: 12px;
+  transition: 0.25s;
+}
+.plan-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
+.loader {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  z-index: 999;
+}
+.loader.hidden {
+  display: none;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  border-top: 5px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.skeleton-card {
+  height: 150px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #eee 25%, #ddd 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: loading 1.2s infinite;
+}
+
+@keyframes loading {
+  to {
+    background-position: -200% 0;
+  }
+}
 /* PAGES */
-/* Hero Section */
+/* HERO */
 .hero {
   display: flex;
   align-items: center;
@@ -204,19 +242,7 @@ button:active {
   color: #b3b3b3;
 }
 
-/* Ajustes para Tablets/Desktop */
-@media (min-width: 768px) {
-  .hero {
-    padding: 160px 20px 100px 20px;
-  }
-  .hero .hero-content h1 {
-    font-size: 3.5rem;
-  }
-  .hero .hero-content p {
-    font-size: 1.5rem;
-  }
-}
-/* Grid de Planes y Tarjetas */
+/* GRID PLANES */
 .pelis-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -229,7 +255,7 @@ button:active {
   }
 }
 
-/* Perfil y CRUD */
+/* PERFIL */
 .perfil-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -242,52 +268,41 @@ button:active {
   }
 }
 
-.card {
-  background: rgba(0, 0, 0, 0.65);
-  padding: 1.8rem;
-  border-radius: 14px;
-  border: 1px solid rgba(157, 78, 221, 0.3);
-  backdrop-filter: blur(12px);
-  transition: 0.3s ease;
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  background: rgba(20, 20, 40, 0.75);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.5s ease;
 }
 
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 15px;
-  background: radial-gradient(circle, transparent 20%, #0f0c29 100%), url("../assets/img/img-animes-juntos.jpg") no-repeat center center/cover;
-}
-.login-container .login-card {
-  background-color: rgba(0, 0, 0, 0.85);
-  padding: 2rem;
-  border-radius: 8px;
+.login-card input {
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
-  border-bottom: 3px solid #9d4edd;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  transition: 0.2s;
 }
-@media (min-width: 768px) {
-  .login-container .login-card {
-    padding: 3.5rem;
+
+.login-card input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-}
-.login-container .login-card h1 {
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: #9d4edd;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 1.5rem;
-}
-@media (min-width: 768px) {
-  .login-container .login-card h1 {
-    font-size: 2rem;
-    text-align: left;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }/*# sourceMappingURL=style.css.map */

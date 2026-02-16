@@ -2,7 +2,7 @@
     background: $card-bg;
     border-radius: 14px;
     border: 1px solid $card-border;
-    padding: 1.5rem;
+    padding: 1.8rem;
     backdrop-filter: blur(12px);
     transition: all .3s ease;
     position: relative;
@@ -24,7 +24,7 @@
         line-height: 1.4;
     }
 
-    /* Glow tipo streaming */
+    /* Glow streaming */
     &::before {
         content: "";
         position: absolute;
@@ -39,8 +39,17 @@
     &:hover::before {
         opacity: 1;
     }
+}
 
-    @include tablet {
-        padding: 2rem;
+.plan-card {
+    background: rgba(0,0,0,.75);
+    padding: 20px;
+    border-radius: 12px;
+    transition: .25s;
+
+    &:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 10px 25px rgba(0,0,0,.6);
     }
 }
+
