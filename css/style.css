@@ -136,6 +136,14 @@ button {
   transform: scale(0.96);
 }
 
+.btn-selected {
+  background-color: #9d4edd !important;
+  color: white;
+  cursor: default;
+  pointer-events: none;
+  box-shadow: 0 4px 10px rgba(157, 78, 221, 0.3);
+}
+
 .card {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 14px;

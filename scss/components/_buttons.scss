@@ -26,3 +26,11 @@ button {
         transform: scale(.96);
     }
 }
+
+.btn-selected {
+    background-color: $primary-color !important; 
+    color: white;
+    cursor: default;
+    pointer-events: none; 
+    box-shadow: 0 4px 10px rgba($primary-color, 0.3);
+}

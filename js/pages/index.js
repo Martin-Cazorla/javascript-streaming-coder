@@ -35,9 +35,29 @@ function seleccionarPlan(id) {
 
   guardarUsuario(usuarioActivo);
   
-  // Refrescar UI
+  // --- INTEGRACIÓN DE UI (Cambio de color del botón) ---
+  const container = qs('#planes-container');
+  
+  // 1. Buscamos si había un botón seleccionado antes y lo "reseteamos"
+  const prevSelected = container.querySelector('.btn-selected');
+  if (prevSelected) {
+      prevSelected.classList.remove('btn-selected');
+      prevSelected.innerText = 'Contratar';
+  }
+
+  // 2. Buscamos el botón específico que se acaba de clickear. 
+  const btnActual = container.querySelector(`button[data-id="${id}"]`) || event.target;
+  
+  if (btnActual && btnActual.tagName === 'BUTTON') {
+      btnActual.classList.add('btn-selected');
+      btnActual.innerText = 'Seleccionado';
+  }
+  // -----------------------------------------------------
+
+  // Refrescar resto de la UI
   actualizarPerfil(usuarioActivo);
-  mostrarPlanes(usuarioActivo, seleccionarPlan);
+  
+  mostrarPlanes(usuarioActivo, seleccionarPlan); 
   renderFactura(usuarioActivo, confirmarPago);
 }
 
@@ -48,7 +68,6 @@ function confirmarPago() {
   actualizarPerfil(usuarioActivo);
   mostrarMensaje("¡Bienvenido a la familia KaijuStream! 🐉");
   
-  // Ocultar planes tras pagar
   qs("#planes-container").classList.add("hidden");
 }
 
