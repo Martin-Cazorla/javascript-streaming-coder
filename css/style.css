@@ -111,22 +111,28 @@ button {
 
 /* COMPONENTS */
 button {
-  background: linear-gradient(45deg, #9d4edd, #c77dff);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   border: none;
   padding: 0.7rem 1.6rem;
   border-radius: 8px;
-  color: white;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.25s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary, #btn-comenzar, #loginForm button {
+  background: linear-gradient(45deg, #9d4edd, #c77dff);
+  color: white;
   letter-spacing: 0.5px;
 }
-button:hover {
+.btn-primary:hover, #btn-comenzar:hover, #loginForm button:hover {
   transform: translateY(-2px) scale(1.03);
   filter: brightness(1.15);
   box-shadow: 0 10px 20px rgba(157, 78, 221, 0.4);
 }
-button:active {
+.btn-primary:active, #btn-comenzar:active, #loginForm button:active {
   transform: scale(0.96);
 }
 
@@ -278,6 +284,9 @@ button:active {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(rgba(15, 12, 41, 0.85), rgba(15, 12, 41, 0.85)), url("../assets/images/img-animes-juntos.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 .login-card {
@@ -289,6 +298,7 @@ button:active {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
   text-align: center;
+  animation: fadeIn 0.5s ease;
 }
 .login-card h1 {
   color: #9d4edd;
@@ -298,6 +308,7 @@ button:active {
   color: white;
   margin-bottom: 2rem;
   font-weight: 400;
+  font-size: 1.2rem;
 }
 .login-card form {
   display: flex;
@@ -309,12 +320,27 @@ button:active {
   padding: 12px 15px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   color: white;
   font-size: 1rem;
 }
 .login-card form input:focus {
   outline: none;
   border-color: #9d4edd;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-back {
+  margin-top: 1.5rem;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #b3b3b3 !important;
+  font-size: 0.9rem !important;
+  width: 100%;
+}
+.btn-back:hover {
+  border-color: #9d4edd !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: none !important;
 }/*# sourceMappingURL=style.css.map */

@@ -1,12 +1,19 @@
 button {
-    background: linear-gradient(45deg, $primary-color, #c77dff);
+    font-family: $font-main;
     border: none;
     padding: .7rem 1.6rem;
     border-radius: 8px;
-    color: white;
     font-weight: bold;
     cursor: pointer;
     transition: all .25s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+// Botón principal 
+.btn-primary, #btn-comenzar, #loginForm button {
+    background: linear-gradient(45deg, $primary-color, #c77dff);
+    color: white;
     letter-spacing: .5px;
 
     &:hover {

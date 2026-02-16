@@ -12,7 +12,6 @@ if (usuarioActivo.email) {
 }
 
 /* ===== EVENTOS ===== */
-
 on(qs("#btn-comenzar"), "click", () => {
   qs(".hero").classList.add("hidden"); 
   mostrarPlanes(usuarioActivo, seleccionarPlan);

@@ -1,13 +1,22 @@
 import { crearUsuario, guardarUsuario } from "../services/userService.js";
 import { qs, on } from "../utils/dom.js";
 
+// Esperamos a que el DOM esté listo por seguridad
 on(qs("#loginForm"), "submit", e => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const email = qs('#loginForm input[type="email"]').value;
+    const emailInput = qs('#loginForm input[type="email"]');
+    const passwordInput = qs('#loginForm input[type="password"]');
 
-  const usuario = crearUsuario(email);
-  guardarUsuario(usuario);
+    // Validación básica
+    if (emailInput && emailInput.value.trim() !== "") {
 
-  window.location.href = "index.html";
+        const usuario = crearUsuario(emailInput.value.trim());
+        
+        guardarUsuario(usuario);
+
+        window.location.href = "index.html";
+    } else {
+        alert("Por favor, ingresa un correo electrónico válido.");
+    }
 });
