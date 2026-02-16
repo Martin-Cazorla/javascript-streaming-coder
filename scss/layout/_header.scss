@@ -1,43 +1,24 @@
-.navbar {
+.site-header {
     width: 100%;
     z-index: 1000;
-    background: rgba(0,0,0,.85);
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
+    padding: 1rem 5%; 
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    h1 {
+        font-size: 1.5rem;
+        color: $primary-color; 
+        margin: 0;
+    }
 
-    .navbar-flex {
+    .nav-auth {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
         gap: 1rem;
-        padding: 1rem 0;
-    }
-
-    .logo {
-        font-size: 1.4rem;
-        font-weight: bold;
-        color: white;
-        flex-shrink: 0;
-
-        span {
-            color: $primary-color;
-        }
-    }
-
-    .user-info {
-        color: $primary-color;
-        font-size: .85rem;
-        max-width: 45vw;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    @include tablet {
-        .user-info {
-            max-width: none;
-            white-space: normal;
-        }
     }
 }

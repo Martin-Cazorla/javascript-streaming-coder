@@ -1,0 +1,24 @@
+.planes {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    // Usando tu mixin de tablet/desktop
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    @include desktop {
+        grid-template-columns: repeat(3, 1fr); 
+    }
+}
+
+// Clase de utilidad para contenedores generales
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
