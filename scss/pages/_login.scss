@@ -1,0 +1,37 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px; 
+    background: radial-gradient(circle, transparent 20%, $secondary-color 100%),
+                url('../assets/img/img-animes-juntos.jpg') no-repeat center center/cover;
+
+    .login-card {
+        background-color: rgba(0, 0, 0, 0.85); 
+        padding: 2rem; 
+        border-radius: 8px;
+        width: 100%;
+        max-width: 400px; 
+        box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+        border-bottom: 3px solid $primary-color; 
+
+        @media (min-width: 768px) {
+            padding: 3.5rem;
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            text-align: center; 
+            color: $primary-color;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.5rem; 
+
+            @media (min-width: 768px) {
+                font-size: 2rem;
+                text-align: left;
+            }
+        }
+    }
+}

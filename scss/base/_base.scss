@@ -1,0 +1,53 @@
+// Reset
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+html {
+    font-size: clamp(14px, 1vw, 18px);
+}
+
+body {
+    font-family: $font-main;
+    color: $text-light;
+    background-color: $secondary-color;
+    background: linear-gradient($overlay-dark, $overlay-dark), 
+                url('../assets/img/img-animes-juntos.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.user-info {
+    color: $primary-color;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    font-size: 0.85rem;
+    word-break: break-all; 
+
+    @media (min-width: 768px) {
+        margin-right: 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+button {
+    font-size: clamp(.8rem, 1vw, 1rem);
+}

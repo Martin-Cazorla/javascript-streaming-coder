@@ -1,0 +1,46 @@
+.card {
+    background: $card-bg;
+    border-radius: 14px;
+    border: 1px solid $card-border;
+    padding: 1.5rem;
+    backdrop-filter: blur(12px);
+    transition: all .3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,.7);
+        border-color: rgba($primary-color,.6);
+    }
+
+    h3 {
+        color: $primary-color;
+        margin-bottom: .8rem;
+    }
+
+    p {
+        color: $text-muted;
+        line-height: 1.4;
+    }
+
+    /* Glow tipo streaming */
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top,
+                    rgba($primary-color,.15),
+                    transparent 70%);
+        opacity: 0;
+        transition: .3s;
+    }
+
+    &:hover::before {
+        opacity: 1;
+    }
+
+    @include tablet {
+        padding: 2rem;
+    }
+}

@@ -1,5 +1,18 @@
-@import 'variables';
-@import 'base';
-@import 'index'; 
-@import 'login';
-@import 'footer';
+/* ABSTRACTS */
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+
+/* BASE */
+@import 'base/base';
+
+/* LAYOUT */
+@import 'layout/header';
+@import 'layout/footer';
+
+/* COMPONENTS */
+@import 'components/buttons';
+@import 'components/cards';
+
+/* PAGES */
+@import 'pages/index';
+@import 'pages/login';
