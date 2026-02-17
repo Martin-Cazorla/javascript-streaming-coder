@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "nombre": "One Piece",
+        "genero": "shonen",
+        "descripcion": "Monkey D. Luffy busca el tesoro legendario.",
+        "imagen": "./assets/images/one-piece.jpg"
+    },
+    {
+        "id": 2,
+        "nombre": "Attack on Titan",
+        "genero": "seinen",
+        "descripcion": "La lucha de la humanidad contra los titanes.",
+        "imagen": "./assets/images/aot.jpg"
+    },
+    {
+        "id": 3,
+        "nombre": "Naruto Shippuden",
+        "genero": "shonen",
+        "descripcion": "El camino de un ninja para ser Hokage.",
+        "imagen": "./assets/images/naruto.jpg"
+    },
+    {
+        "id": 4,
+        "nombre": "Demon Slayer",
+        "genero": "shonen",
+        "descripcion": "Tanjiro busca curar a su hermana Nezuko.",
+        "imagen": "./assets/images/demon-slayer.jpg"
+    },
+    {
+        "id": 5,
+        "nombre": "Death Note",
+        "genero": "seinen",
+        "descripcion": "Un duelo de mentes entre Light y L.",
+        "imagen": "./assets/images/death-note.jpg"
+    },
+    {
+        "id": 6,
+        "nombre": "Jujutsu Kaisen",
+        "genero": "shonen",
+        "descripcion": "Maldiciones y hechicería en el Japón moderno.",
+        "imagen": "./assets/images/jujutsu.jpg"
+    }
+]

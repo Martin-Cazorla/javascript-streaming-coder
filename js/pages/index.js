@@ -1,3 +1,6 @@
+/**
+ * Lógica de la página de index
+ */
 import { cargarUsuario, guardarUsuario, crearUsuario, limpiarUsuario } from "../services/userService.js";
 import { catalogoPlanes } from "../services/planService.js";
 import { actualizarPerfil, mostrarPlanes, renderFactura, mostrarMensaje, mostrarFormularioPerfil } from "../components/ui.js";

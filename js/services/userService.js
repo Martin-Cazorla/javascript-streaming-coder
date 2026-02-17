@@ -1,8 +1,7 @@
 /** SERVICIO DE USUARIO */
 
-const STORAGE_KEY = "usuarioKaiju";
-
-/* ===== MODELO ===== */
+// clave para que sea consistente en toda la app
+const STORAGE_KEY = "usuarioLogueado"; 
 
 /**
  * @param {string} email 
@@ -17,8 +16,6 @@ export function crearUsuario(email = "", nombre = "Invitado") {
     suscrito: false
   };
 }
-
-/* ===== STORAGE ===== */
 
 /**
  * @param {Object} usuario 

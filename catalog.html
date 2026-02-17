@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaijuStream - Catálogo de Anime</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navbar">
+            <h1 class="logo">KaijuStream</h1>
+            <div class="nav-user">
+                <span id="user-display">Cargando usuario...</span>
+                <button id="btn-logout" class="btn-secondary">Cerrar Sesión</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="catalog-container">
+        <section class="filters">
+            <h2>Explorar Catálogo</h2>
+            <input type="text" id="search-input" placeholder="Buscar anime por nombre...">
+            <select id="genre-filter">
+                <option value="all">Todos los géneros</option>
+                <option value="shonen">Shonen</option>
+                <option value="seinen">Seinen</option>
+            </select>
+        </section>
+
+        <section id="anime-grid" class="anime-grid">
+            </section>
+    </main>
+
+    <script type="module" src="./js/pages/catalog.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

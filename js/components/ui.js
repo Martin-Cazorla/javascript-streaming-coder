@@ -10,6 +10,8 @@ export function actualizarPerfil(usuario, onEditar) {
 
     const card = document.createElement("div");
     card.className = "card";
+    
+    // Estructura de la información del perfil
     card.innerHTML = `
         <h3 style="color: #9d4edd">Mi Perfil</h3>
         <p><strong>Usuario:</strong> ${usuario.nombre || "Invitado"}</p>
@@ -18,6 +20,13 @@ export function actualizarPerfil(usuario, onEditar) {
         <p><strong>Estado:</strong> ${usuario.suscrito ? "Activo ✅" : "Pendiente de pago ⏳"}</p>
     `;
 
+    // CONTENEDOR DE ACCIONES (Botones)
+    const acciones = document.createElement("div");
+    acciones.style.display = "flex";
+    acciones.style.gap = "10px";
+    acciones.style.marginTop = "1rem";
+
+    // Botón Editar
     const btnEditar = document.createElement("button");
     btnEditar.textContent = "Editar Perfil";
     btnEditar.addEventListener("click", (e) => {
@@ -25,7 +34,18 @@ export function actualizarPerfil(usuario, onEditar) {
         onEditar();
     });
 
-    card.appendChild(btnEditar);
+    // Botón Ver Catálogo
+    const btnCatalogo = document.createElement("button");
+    btnCatalogo.textContent = "Ver Catálogo";
+    btnCatalogo.className = "btn-primary"; 
+    btnCatalogo.addEventListener("click", () => {
+        window.location.href = "catalog.html";
+    });
+
+    acciones.appendChild(btnEditar);
+    acciones.appendChild(btnCatalogo);
+    
+    card.appendChild(acciones);
     contenedor.appendChild(card);
 }
 
@@ -133,3 +153,30 @@ export function mostrarMensaje(texto) {
     document.body.appendChild(msg);
     setTimeout(() => msg.remove(), 3000);
 }
+
+export const renderGrid = (animes, container) => {
+    container.innerHTML = ""; 
+
+    if (animes.length === 0) {
+        container.innerHTML = `<p class="no-results">No se encontraron animes que coincidan con tu búsqueda.</p>`;
+        return;
+    }
+
+    animes.forEach(anime => {
+        const article = document.createElement('article');
+        article.classList.add('anime-card');
+
+        article.innerHTML = `
+            <div class="card-image">
+                <img src="${anime.imagen}" alt="Portada de ${anime.nombre}" loading="lazy">
+            </div>
+            <div class="card-content">
+                <span class="badge">${anime.genero.toUpperCase()}</span>
+                <h3>${anime.nombre}</h3>
+                <p>${anime.descripcion}</p>
+                <button class="btn-primary btn-ver" data-id="${anime.id}">Ver ahora</button>
+            </div>
+        `;
+        container.appendChild(article);
+    });
+};
