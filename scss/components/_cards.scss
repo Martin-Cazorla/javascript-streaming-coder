@@ -7,21 +7,11 @@
     transition: all .3s ease;
     position: relative;
     overflow: hidden;
+    z-index: 1;
 
-    &:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(0,0,0,.7);
-        border-color: rgba($primary-color,.6);
-    }
-
-    h3 {
-        color: $primary-color;
-        margin-bottom: .8rem;
-    }
-
-    p {
-        color: $text-muted;
-        line-height: 1.4;
+    h3, p, button, form {
+        position: relative; 
+        z-index: 10; 
     }
 
     /* Glow streaming */
@@ -34,6 +24,7 @@
                     transparent 70%);
         opacity: 0;
         transition: .3s;
+        z-index: -1; 
     }
 
     &:hover::before {

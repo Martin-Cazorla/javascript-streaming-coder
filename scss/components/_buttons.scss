@@ -4,22 +4,22 @@ button {
     padding: .7rem 1.6rem;
     border-radius: 8px;
     font-weight: bold;
-    cursor: pointer;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 20;
     transition: all .25s ease;
     display: inline-block;
     text-align: center;
-}
-
-// Botón principal 
-.btn-primary, #btn-comenzar, #loginForm button {
     background: linear-gradient(45deg, $primary-color, #c77dff);
     color: white;
     letter-spacing: .5px;
 
+    // Efecto Hover unificado 
     &:hover {
         transform: translateY(-2px) scale(1.03);
         filter: brightness(1.15);
-        box-shadow: 0 10px 20px rgba($primary-color,.4);
+        box-shadow: 0 10px 20px rgba($primary-color, .4);
     }
 
     &:active {
@@ -27,10 +27,24 @@ button {
     }
 }
 
+// Estilo específico para cuando un plan ya está seleccionado
 .btn-selected {
-    background-color: $primary-color !important; 
+    background: $primary-color !important; 
     color: white;
-    cursor: default;
-    pointer-events: none; 
+    cursor: default !important;
+    pointer-events: none !important; 
     box-shadow: 0 4px 10px rgba($primary-color, 0.3);
+    transform: none !important; 
+    filter: grayscale(0.5); 
+}
+
+// Botón secundario 
+.btn-secundario {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
 }
