@@ -40,5 +40,19 @@
         "genero": "shonen",
         "descripcion": "Maldiciones y hechicería en el Japón moderno.",
         "imagen": "./assets/images/jujutsu.jpg"
+    },
+    {
+        "id": 7,
+        "nombre": "Boku no Hero",
+        "genero": "shonen",
+        "descripcion": "El camino de Deku para ser Heroe.",
+        "imagen": "./assets/images/boku-no-hero.jpg"
+    },
+    {
+        "id": 8,
+        "nombre": "Black Clover",
+        "genero": "shonen",
+        "descripcion": "El camino de un joven hechicero para ser rey Mago.",
+        "imagen": "./assets/images/black-clover.jpg"
     }
 ]
