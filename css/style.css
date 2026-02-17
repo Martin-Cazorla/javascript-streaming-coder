@@ -53,24 +53,44 @@ button {
   width: 100%;
   z-index: 1000;
   background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
-  padding: 1rem 5%;
+  padding: 0.8rem 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.site-header h1 {
-  font-size: 1.5rem;
-  color: #9d4edd;
+.site-header .site-logo {
   margin: 0;
+  display: flex;
+}
+.site-header .site-logo a {
+  display: block;
+  line-height: 0;
+}
+.site-header .site-logo .logo-img {
+  height: 45px;
+  width: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.site-header .site-logo .logo-img:hover {
+  transform: scale(1.05);
 }
 .site-header .nav-auth {
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
+@media (max-width: 480px) {
+  .site-header .site-logo .logo-img {
+    height: 35px;
+  }
+}
 .site-footer {
   background-color: rgba(0, 0, 0, 0.9);
   padding: 2rem 0;
@@ -149,7 +169,8 @@ button:active {
 .btn-secundario {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
 }
 .btn-secundario:hover {
   background: rgba(255, 255, 255, 0.2);
@@ -160,18 +181,17 @@ button:active {
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.8rem;
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   z-index: 1;
+  /* Glow streaming */
 }
 .card h3, .card p, .card button, .card form {
   position: relative;
   z-index: 10;
-}
-.card {
-  /* Glow streaming */
 }
 .card::before {
   content: "";
