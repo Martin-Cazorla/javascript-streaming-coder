@@ -20,9 +20,6 @@ export function actualizarPerfil(usuario, onEditar) {
 
     const btnEditar = document.createElement("button");
     btnEditar.textContent = "Editar Perfil";
-    btnEditar.className = "btn-secundario";
-    btnEditar.style.marginTop = "10px";
-    
     btnEditar.addEventListener("click", (e) => {
         e.preventDefault();
         onEditar();
@@ -36,7 +33,6 @@ export function renderFactura(usuario, onConfirmarPago) {
     const contenedorPerfil = qs("#perfil-container");
     if (!usuario.planContratado || usuario.suscrito || !contenedorPerfil) return;
 
-    // 1. Limpieza absoluta de facturas previas
     const previas = document.querySelectorAll(".factura-animada");
     previas.forEach(p => p.remove());
 
@@ -51,19 +47,14 @@ export function renderFactura(usuario, onConfirmarPago) {
         <p>Total (IVA incluido): <strong>$${total.toFixed(2)}</strong></p>
     `;
 
-    // 2. Creación manual del botón para asegurar el evento
     const btnPagar = document.createElement("button");
     btnPagar.textContent = "Confirmar y Pagar";
     btnPagar.id = "btn-pagar-final"; 
     btnPagar.style.marginTop = "1rem";
-    btnPagar.style.cursor = "pointer"; 
-    btnPagar.style.pointerEvents = "auto"; 
     
-    // 3. Vinculación limpia
     btnPagar.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation(); 
-        console.log("Clic detectado en Confirmar y Pagar"); 
         onConfirmarPago();
     });
 
@@ -94,7 +85,6 @@ export function mostrarFormularioPerfil(usuario, onGuardar) {
         </div>
     `;
 
-    // Evento de Guardar
     qs("#form-usuario").addEventListener("submit", (e) => {
         e.preventDefault();
         onGuardar({
@@ -103,7 +93,6 @@ export function mostrarFormularioPerfil(usuario, onGuardar) {
         });
     });
 
-    // Evento de Cancelar
     qs("#btn-cancelar").addEventListener("click", () => {
         contenedor.classList.add("hidden");
     });
@@ -114,19 +103,24 @@ export function mostrarPlanes(usuario, onSelectPlan) {
     if (!contenedor) return;
     contenedor.classList.remove("hidden");
     contenedor.innerHTML = "";
+    
     catalogoPlanes.forEach(plan => {
         const card = document.createElement("div");
         card.className = "plan-card";
         card.innerHTML = `<h3>${plan.nombre}</h3><p>${plan.detalles}</p><p><strong>$${plan.precio}</strong></p>`;
+        
         const btn = document.createElement("button");
         const esSeleccionado = usuario.planContratado?.id === plan.id;
+        
         btn.textContent = esSeleccionado ? "Seleccionado" : "Contratar";
+        
         if (esSeleccionado) {
-            btn.style.filter = "grayscale(1)";
+            btn.classList.add("btn-selected");
             btn.disabled = true;
         } else {
             btn.addEventListener("click", () => onSelectPlan(plan.id));
         }
+        
         card.appendChild(btn);
         contenedor.appendChild(card);
     });

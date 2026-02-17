@@ -56,6 +56,11 @@ function actualizarInterfaz() {
 
 /* ===== EVENTOS DE BOTONES ESTÁTICOS ===== */
 
+// EVENTO LOGIN 
+on(qs("#btn-login"), "click", () => {
+    window.location.href = "login.html";
+});
+
 on(qs("#btn-comenzar"), "click", () => {
     qs(".hero").classList.add("hidden");
     actualizarInterfaz();
@@ -70,14 +75,15 @@ on(qs("#btn-logout"), "click", () => {
 mostrarLoader();
 setTimeout(() => {
     ocultarLoader();
-    if (usuarioActivo.planContratado) {
+    if (usuarioActivo.planContratado || (usuarioActivo.email && usuarioActivo.email !== "")) {
         qs(".hero")?.classList.add("hidden");
         actualizarInterfaz();
     }
 }, 800);
 
+// Listener de emergencia 
 document.addEventListener("click", (e) => {
     if (e.target && e.target.id === "btn-pagar-final") {
-        confirmarPago();
+        ejecutarPago();
     }
 });
