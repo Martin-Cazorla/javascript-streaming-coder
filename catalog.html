@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KaijuStream - Catálogo de Anime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -12,27 +13,40 @@
             <h1 class="logo">KaijuStream</h1>
             <div class="nav-user">
                 <span id="user-display">Cargando usuario...</span>
+                <button id="btn-edit-profile" class="btn-secondary">Editar Perfil</button>
                 <button id="btn-logout" class="btn-secondary">Cerrar Sesión</button>
             </div>
         </nav>
     </header>
 
-    <main class="catalog-container">
-        <section class="filters">
-            <h2>Explorar Catálogo</h2>
-            <input type="text" id="search-input" placeholder="Buscar anime por nombre...">
-            <select id="genre-filter">
-                <option value="all">Todos los géneros</option>
-                <option value="shonen">Shonen</option>
-                <option value="seinen">Seinen</option>
-            </select>
-        </section>
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="subscriptions-panel">
+                <h3 style="color: #9d4edd; font-family: 'Orbitron', sans-serif; font-size: 1rem;">Mis Suscripciones</h3>
+                <div id="mis-suscripciones-lista" class="list-group">
+                    </div>
+            </div>
+        </aside>
 
-        <section id="anime-grid" class="anime-grid">
+        <main class="catalog-container">
+            <section class="filters">
+                <h2>Explorar Catálogo</h2>
+                <div class="filter-controls">
+                    <input type="text" id="search-input" placeholder="Buscar anime por nombre...">
+                    <select id="genre-filter">
+                        <option value="all">Todos los géneros</option>
+                        <option value="shonen">Shonen</option>
+                        <option value="seinen">Seinen</option>
+                    </select>
+                </div>
             </section>
-    </main>
 
-    <script type="module" src="./js/pages/catalog.js"></script>
+            <section id="anime-grid" class="anime-grid">
+                </section>
+        </main>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="./js/pages/catalog.js"></script>
 </body>
 </html>

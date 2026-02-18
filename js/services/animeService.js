@@ -1,19 +1,13 @@
 /**
  * Lógica de anime service
  */
-export const fetchAnimes = async () => {
+export const obtenerDatos = async () => {
     try {
-        const response = await fetch('./data/animes.json');
-        if (!response.ok) {
-            throw new Error(`Error HTTP! estado: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data;
-        
+        const response = await fetch('./data/datos.json'); 
+        if (!response.ok) throw new Error("No se pudo cargar el JSON");
+        return await response.json(); 
     } catch (error) {
-        console.error("No se pudo recuperar el catálogo de animes:", error);
-        
-        return []; 
+        console.error("Error en Fetch:", error);
+        throw error; 
     }
 };
