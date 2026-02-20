@@ -1,40 +1,58 @@
-/**
- * Lógica de la página de login
- */
+/**LÓGICA DE LA PÁGINA DE LOGIN */
 import { crearUsuario, guardarUsuario } from "../services/userService.js";
 import { qs, on } from "../utils/dom.js";
 
-// Usamos el evento cuando el DOM esté listo para evitar que qs devuelva null
-document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = qs("#loginForm");
+// Selección de Nodos 
+const loginForm = qs("#loginForm");
+const btnBack = qs("#btn-back-home");
 
-    if (loginForm) {
-        on(loginForm, "submit", e => {
-            e.preventDefault();
+// Lógica de Login
+if (loginForm) {
+    on(loginForm, "submit", (e) => {
+        e.preventDefault();
 
-            const emailInput = qs('#loginForm input[type="email"]');
-            const passwordInput = qs('#loginForm input[type="password"]');
+        // Accedemos a los inputs por ID 
+        const emailInput = qs("#email");
+        const passwordInput = qs("#password");
 
-            // Validación básica
-            if (!emailInput.value.trim() || !passwordInput.value.trim()) {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire('Atención', 'Por favor completa todos los campos', 'warning');
-                } else {
-                    alert('Por favor completa todos los campos');
-                }
-                return;
+        const emailValue = emailInput.value.trim();
+        const passwordValue = passwordInput.value.trim();
+
+        // Validación con SweetAlert2 
+        if (!emailValue || !passwordValue) {
+            Swal.fire({
+                title: 'Campos incompletos',
+                text: 'Por favor, completa tu email y contraseña para ingresar.',
+                icon: 'warning',
+                confirmButtonColor: '#9d4edd'
+            });
+            return;
+        }
+
+        // Creación del perfil 
+        const nombreUsuario = emailValue.split('@')[0]; 
+        const usuario = crearUsuario(emailValue, nombreUsuario);
+        
+        // Persistencia 
+        guardarUsuario(usuario);
+
+        // Feedback y Redirección asíncrona
+        Swal.fire({
+            title: '¡Bienvenido KAIJU!',
+            text: `Hola ${nombreUsuario}, preparando tu catálogo...`,
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+            willClose: () => {
+                window.location.href = "catalog.html";
             }
-
-            // Crear el objeto usuario 
-            const nombreUsuario = emailInput.value.split('@')[0]; 
-            const usuario = crearUsuario(emailInput.value.trim(), nombreUsuario);
-            
-            // Guardar usuario (clave 'usuarioLogueado')
-            guardarUsuario(usuario);
-
-            window.location.href = "index.html";
         });
-    } else {
-        console.error("No se encontró el formulario #loginForm. Revisa el ID en tu HTML.");
-    }
-});
+    });
+}
+
+// Manejo del botón "Volver" 
+if (btnBack) {
+    on(btnBack, "click", () => {
+        window.location.href = "index.html";
+    });
+}

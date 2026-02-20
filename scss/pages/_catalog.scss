@@ -1,8 +1,83 @@
-// Estilos específicos para la página de Catálogo
-.catalog-container {
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+// Layout Principal 
+.main-layout {
+    display: flex;
+    gap: 2rem;
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
+    align-items: flex-start;
+
+    // Adaptabilidad para móviles
+    @media (max-width: 768px) {
+        flex-direction: column;
+        padding: 1rem;
+    }
+}
+
+// Barra Lateral 
+.sidebar {
+    flex: 0 0 300px;
+    position: sticky;
+    top: 2rem;
+    width: 100%; 
+
+    .subscriptions-panel {
+        background: rgba(26, 26, 46, 0.9);
+        border: 1px solid v.$primary-color; 
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+        h3 {
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+    }
+}
+
+// Lista de suscripciones dentro del Panel
+.list-group {
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+
+        span {
+            color: #eee;
+        }
+
+        .btn-cancelar {
+            background: transparent;
+            border: 1px solid #ff4d4d;
+            color: #ff4d4d;
+            padding: 2px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: #ff4d4d;
+                color: white;
+                box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+            }
+        }
+    }
+}
+
+// Contenedor del Catálogo 
+.catalog-container {
+    flex: 1;
     min-height: 80vh;
 
     h2 {
@@ -13,7 +88,7 @@
     }
 }
 
-// Sección de filtros 
+// Sección de Filtros
 .filters {
     display: flex;
     flex-wrap: wrap;
@@ -27,12 +102,12 @@
         border: 1px solid rgba(white, 0.1);
         background-color: rgba(white, 0.05);
         color: white;
-        font-family: $font-main; 
+        font-family: v.$font-main; 
         outline: none;
         transition: border-color 0.3s ease;
 
         &:focus {
-            border-color: $primary-color; 
+            border-color: v.$primary-color; 
         }
     }
 
@@ -50,7 +125,7 @@
     padding-bottom: 4rem;
 }
 
-// Estilo para cuando no hay resultados
+// Estado vacío
 .no-results {
     color: rgba(white, 0.5);
     text-align: center;
