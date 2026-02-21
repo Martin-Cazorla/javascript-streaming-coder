@@ -1,13 +1,15 @@
-/** * SERVICIO DE ANIMES - CARGA DE DATOS REMOTOS*/
+/*SERVICIO DE ANIMES - CARGA DE DATOS REMOTOS*/
 export const fetchAnimes = async () => {
     try {
-        const response = await fetch('./data/animes.json'); 
+        const response = await fetch('../../data/animes.json'); 
         
         if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
+            throw new Error(`Error HTTP: ${response.status} - No se encontró el archivo de datos.`);
         }
         
         const data = await response.json();
+        
+        // Retorna los datos para que el componente (catalog.js) los procese
         return data; 
     } catch (error) {
         console.error("Error al obtener animes:", error);

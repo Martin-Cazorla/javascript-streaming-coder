@@ -4,55 +4,71 @@
         "nombre": "One Piece",
         "genero": "shonen",
         "descripcion": "Monkey D. Luffy busca el tesoro legendario.",
-        "imagen": "./assets/images/one-piece.jpg"
+        "imagen": "../assets/images/one-piece.jpg",
+        "banner": "../assets/images/banners/one-piece-bg.jpg",
+        "videoUrl": "../assets/video/one-piece-trailer.mp4"
     },
     {
         "id": 2,
         "nombre": "Attack on Titan",
         "genero": "seinen",
         "descripcion": "La lucha de la humanidad contra los titanes.",
-        "imagen": "./assets/images/aot.jpg"
+        "imagen": "../assets/images/aot.jpg",
+        "banner": "../assets/images/banners/one-piece-bg.jpg",
+        "videoUrl": "../assets/video/one-piece-trailer.mp4"
     },
     {
         "id": 3,
         "nombre": "Naruto Shippuden",
         "genero": "shonen",
         "descripcion": "El camino de un ninja para ser Hokage.",
-        "imagen": "./assets/images/naruto.jpg"
+        "imagen": "../assets/images/naruto.jpg",
+        "banner": "../assets/images/banners/one-piece-bg.jpg",
+        "videoUrl": "../assets/video/one-piece-trailer.mp4"
     },
     {
         "id": 4,
         "nombre": "Demon Slayer",
         "genero": "shonen",
         "descripcion": "Tanjiro busca curar a su hermana Nezuko.",
-        "imagen": "./assets/images/demon-slayer.jpg"
+        "imagen": "../assets/images/demon-slayer.jpg",
+        "banner": "../assets/images/banners/one-piece-bg.jpg",
+        "videoUrl": "../assets/video/one-piece-trailer.mp4"
     },
     {
         "id": 5,
         "nombre": "Death Note",
         "genero": "seinen",
         "descripcion": "Un duelo de mentes entre Light y L.",
-        "imagen": "./assets/images/death-note.jpg"
+        "imagen": "../assets/images/death-note.jpg",
+        "banner": "../assets/images/banners/one-piece-bg.jpg",
+        "videoUrl": "../assets/video/one-piece-trailer.mp4"
     },
     {
         "id": 6,
         "nombre": "Jujutsu Kaisen",
         "genero": "shonen",
         "descripcion": "Maldiciones y hechicería en el Japón moderno.",
-        "imagen": "./assets/images/jujutsu.jpg"
+        "imagen": "../assets/images/jujutsu.jpg",
+        "banner": "../assets/images/banners/one-piece-bg.jpg",
+        "videoUrl": "../assets/video/one-piece-trailer.mp4"
     },
     {
         "id": 7,
         "nombre": "Boku no Hero",
         "genero": "shonen",
         "descripcion": "El camino de Deku para ser Heroe.",
-        "imagen": "./assets/images/boku-no-hero.jpg"
+        "imagen": "../assets/images/boku-no-hero.jpg",
+        "banner": "../assets/images/banners/one-piece-bg.jpg",
+        "videoUrl": "../assets/video/one-piece-trailer.mp4"
     },
     {
         "id": 8,
         "nombre": "Black Clover",
         "genero": "shonen",
         "descripcion": "El camino de un joven hechicero para ser rey Mago.",
-        "imagen": "./assets/images/black-clover.jpg"
+        "imagen": "../assets/images/black-clover.jpg",
+        "banner": "../assets/images/banners/one-piece-bg.jpg",
+        "videoUrl": "../assets/video/one-piece-trailer.mp4"
     }
 ]

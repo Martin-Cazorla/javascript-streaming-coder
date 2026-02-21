@@ -1,4 +1,4 @@
-button {
+button, .btn-back {
     font-family: $font-main;
     border: none;
     padding: .7rem 1.6rem;
@@ -13,9 +13,9 @@ button {
     text-align: center;
     background: linear-gradient(45deg, $primary-color, #c77dff);
     color: white;
+    text-decoration: none; 
     letter-spacing: .5px;
 
-    // Efecto Hover unificado 
     &:hover {
         transform: translateY(-2px) scale(1.03);
         filter: brightness(1.15);
@@ -27,24 +27,47 @@ button {
     }
 }
 
-// Estilo específico para cuando un plan ya está seleccionado
-.btn-selected {
-    background: $primary-color !important; 
-    color: white;
-    cursor: default !important;
-    pointer-events: none !important; 
-    box-shadow: 0 4px 10px rgba($primary-color, 0.3);
-    transform: none !important; 
-    filter: grayscale(0.5); 
+// Botón de suscripción
+.btn-suscribir {
+    width: 100%;
+    font-size: 0.9rem;
+    margin-top: auto;
 }
 
-// Botón secundario 
+// Botón para cuando ya está seleccionado 
+.btn-selected {
+    background: #333 !important; 
+    color: #888;
+    cursor: default !important;
+    pointer-events: none !important; 
+    transform: none !important; 
+    filter: grayscale(1); 
+    box-shadow: none !important;
+}
+
+// Botón secundario
 .btn-secundario {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     
     &:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+}
+
+// Botón de cancelar
+.btn-cancelar {
+    background: none;
+    color: #ff4d4d;
+    padding: 5px;
+    font-size: 1.2rem;
+    
+    &:hover {
+        color: #ff1a1a;
+        transform: rotate(90deg) scale(1.2);
+        background: none;
+        box-shadow: none;
     }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaijuStream - Reproductor</title>
+    <link rel="stylesheet" href="../css/style.css"> 
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="catalog.html" class="btn-back">Volver al Catálogo</a>
+        </nav>
+    </header>
+
+    <main id="player-container">
+        <section class="video-section">
+            <h1 id="anime-title">Cargando anime...</h1>
+            
+            <div class="video-wrapper">
+                <video id="main-video" controls poster="">
+                    <source src="" type="video/mp4">
+                    Tu navegador no soporta la reproducción de videos.
+                </video>
+            </div>
+
+            <article class="anime-info">
+                <h2>Sinopsis</h2>
+                <p id="anime-description">Cargando descripción...</p>
+                <div id="anime-tags">
+                    </div>
+            </article>
+        </section>
+    </main>
+
+    <script src="../js/pages/player.js"></script>
+</body>
+</html>

@@ -8,7 +8,6 @@ import {
     cancelarSuscripcion 
 } from '../services/userService.js';
 
-// --- Referencias al DOM ---
 const gridContainer = document.getElementById('anime-grid');
 const searchInput = document.getElementById('search-input');
 const genreFilter = document.getElementById('genre-filter');
@@ -19,13 +18,30 @@ const suscripcionesContainer = document.getElementById('mis-suscripciones-lista'
 
 let allAnimes = []; 
 
-/**
- * Inicialización asíncrona 
- */
+const cargarCatalogoJSON = async () => {
+    try {
+        allAnimes = await fetchAnimes();
+        
+        if (!allAnimes || allAnimes.length === 0) {
+            throw new Error("La base de datos de animes está vacía.");
+        }
+
+        renderizarYEscuchar(allAnimes);
+        renderizarSuscripciones(); 
+    } catch (error) {
+        console.error("Error en la carga inicial:", error);
+        Swal.fire({
+            title: 'Error de conexión',
+            text: 'No se pudo conectar con el servidor de KaijuStream.',
+            icon: 'error',
+            confirmButtonColor: '#9d4edd'
+        });
+    }
+};
+
 const init = async () => {
     const datosUsuario = cargarUsuario();
     
-    // Protección de ruta
     if (!datosUsuario) {
         window.location.href = 'login.html';
         return;
@@ -33,13 +49,11 @@ const init = async () => {
 
     userDisplay.textContent = `Hola, ${datosUsuario.nombre || 'Titán'} 👋`;
 
-    // Listeners de navegación
     btnLogout.addEventListener('click', () => {
         limpiarUsuario();
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     });
 
-    // CRUD: Update Perfil 
     btnEditProfile?.addEventListener('click', async () => {
         const usuarioActual = cargarUsuario();
         const { value: formValues } = await Swal.fire({
@@ -67,16 +81,8 @@ const init = async () => {
         }
     });
 
-    // CARGA DE DATOS ASÍNCRONA
-    try {
-        allAnimes = await fetchAnimes();
-        renderizarYEscuchar(allAnimes);
-        renderizarSuscripciones(); 
-    } catch (error) {
-        Swal.fire('Error', 'No se pudo conectar con el servidor de KaijuStream', 'error');
-    }
+    await cargarCatalogoJSON();
 
-    // Filtros dinámicos
     searchInput.addEventListener('input', applyFilters);
     genreFilter.addEventListener('change', applyFilters);
 };
@@ -84,15 +90,23 @@ const init = async () => {
 const renderizarYEscuchar = (lista) => {
     renderGrid(lista, gridContainer);
     
-    // Delegación de eventos o listeners específicos
     gridContainer.querySelectorAll('.btn-suscribir').forEach(boton => {
-        boton.addEventListener('click', () => {
+        boton.addEventListener('click', (e) => {
+            e.stopPropagation();
             const id = parseInt(boton.getAttribute('data-id'));
             const anime = allAnimes.find(a => a.id === id);
             
             if (gestionarSuscripcion(anime)) {
                 renderizarSuscripciones();
             }
+        });
+    });
+
+    gridContainer.querySelectorAll('.anime-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const id = parseInt(card.getAttribute('data-id'));
+            const anime = allAnimes.find(a => a.id === id);
+            seleccionarAnime(anime);
         });
     });
 };
@@ -103,7 +117,6 @@ const renderizarSuscripciones = () => {
 
     suscripcionesContainer.innerHTML = "";
 
-    // Mostrar el Plan de Pago Activo 
     if (usuario.planContratado && usuario.suscrito) {
         const planItem = document.createElement('div');
         planItem.className = "plan-status-card mb-3"; 
@@ -115,13 +128,11 @@ const renderizarSuscripciones = () => {
         suscripcionesContainer.appendChild(planItem);
     }
 
-    // Encabezado para la lista de favoritos
     const tituloLista = document.createElement('p');
     tituloLista.style.cssText = "font-size:0.7rem; color:#888; margin-bottom:5px; font-weight:bold;";
     tituloLista.textContent = "MI LISTA DE ANIMES:";
     suscripcionesContainer.appendChild(tituloLista);
 
-    // Manejo de lista vacía
     if (!usuario.suscripciones || usuario.suscripciones.length === 0) {
         const p = document.createElement('p');
         p.className = 'text-muted small';
@@ -130,12 +141,11 @@ const renderizarSuscripciones = () => {
         return;
     }
 
-    // Renderizado de cada anime suscrito
     usuario.suscripciones.forEach(anime => {
         const item = document.createElement('div');
         item.className = "list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary mb-1 p-2";
         item.innerHTML = `
-            <span class="small" style="max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            <span class="small" style="max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor:pointer;">
                 ${anime.nombre}
             </span>
             <button class="btn-cancelar" data-id="${anime.id}" aria-label="Eliminar" 
@@ -143,12 +153,14 @@ const renderizarSuscripciones = () => {
                 &times;
             </button>
         `;
+        
+        item.querySelector('span').addEventListener('click', () => seleccionarAnime(anime));
         suscripcionesContainer.appendChild(item);
     });
 
-    //Re-asignación de Listeners para eliminar 
     suscripcionesContainer.querySelectorAll('.btn-cancelar').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
             const id = parseInt(btn.dataset.id);
             cancelarSuscripcion(id);
             renderizarSuscripciones(); 
@@ -169,4 +181,10 @@ const applyFilters = () => {
     renderizarYEscuchar(filtered);
 };
 
-init();
+const seleccionarAnime = (anime) => {
+    if (!anime) return;
+    localStorage.setItem('selectedAnime', JSON.stringify(anime));
+    window.location.href = 'reproductor.html'; 
+};
+
+document.addEventListener('DOMContentLoaded', init);

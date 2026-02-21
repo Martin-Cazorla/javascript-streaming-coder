@@ -46,14 +46,11 @@ function ejecutarGuardado(nuevosDatos) {
     actualizarInterfaz();
 }
 
-
 async function ejecutarPago() {
-    // Verificación de Seguridad
     if (!usuarioActivo.planContratado) {
         return Swal.fire('Atención', 'Por favor, selecciona un plan primero.', 'warning');
     }
 
-    // Verificación de Identidad
     if (!usuarioActivo.nombre || usuarioActivo.nombre === "Invitado") {
         return Swal.fire({
             title: 'Perfil Incompleto',
@@ -65,7 +62,6 @@ async function ejecutarPago() {
         });
     }
 
-    // Procesamiento de Tarjeta Ficticia
     const { value: pagoConfirmado } = await Swal.fire({
         title: 'Pago Seguro con Tarjeta',
         background: '#1a1a1a',
@@ -89,10 +85,8 @@ async function ejecutarPago() {
     });
 
     if (pagoConfirmado) {
-        // Lógica de pago del servicio
         usuarioActivo = confirmarPagoPlan();
         
-        // Salida y Redirección Final
         Swal.fire({
             title: '¡Pago Exitoso! 🐉',
             text: 'Bienvenido a la comunidad KaijuStream. Redirigiendo...',
@@ -100,7 +94,7 @@ async function ejecutarPago() {
             timer: 2000,
             showConfirmButton: false
         }).then(() => {
-            window.location.href = "catalog.html"; 
+            window.location.href = "pages/catalog.html"; 
         });
     }
 }
@@ -129,10 +123,10 @@ function actualizarInterfaz() {
         });
     }
 
-    // Lógica de visualización dinámica
     if (usuarioActivo.suscrito && usuarioActivo.planContratado) {
         planesCont?.classList.add("hidden");
         qs(".factura-animada")?.remove();
+        window.location.href = "pages/catalog.html";
     } else {
         planesCont?.classList.remove("hidden");
         mostrarPlanes(usuarioActivo, ejecutarSeleccion);
@@ -142,10 +136,12 @@ function actualizarInterfaz() {
 
 /* ===== EVENTOS ===== */
 on(qs("#btn-comenzar"), "click", actualizarInterfaz);
-on(qs("#btn-login"), "click", () => window.location.href = "login.html");
+
+on(qs("#btn-login"), "click", () => window.location.href = "pages/login.html");
+
 on(qs("#btn-logout"), "click", () => {
     limpiarUsuario();
-    window.location.href = "index.html";
+    window.location.href = "index.html"; 
 });
 
 const iniciarApp = () => {
