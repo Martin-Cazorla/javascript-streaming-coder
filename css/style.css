@@ -216,6 +216,16 @@ button:active {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
+.plan-card.active {
+  border: 2px solid #9d4edd;
+  box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
+}
+.plan-card.active .btn-disabled {
+  background: #9d4edd;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .loader {
   position: fixed;
   inset: 0;

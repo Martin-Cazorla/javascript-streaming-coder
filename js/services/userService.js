@@ -1,34 +1,40 @@
 /** SERVICIO DE USUARIO - GESTIÓN DE DATOS Y PERSISTENCIA */
 
-const STORAGE_KEY = "usuarioLogueado"; 
+const STORAGE_KEY = "usuarioLogueado";
 
+// Estructura inicial del objeto usuario (Entrada)
 export function crearUsuario(email = "", nombre = "Invitado") {
-  return {
-    nombre,        
-    email,
-    planContratado: null,
-    suscripciones: [] 
-  };
+    return {
+        nombre,
+        email,
+        planContratado: null,
+        suscrito: false, 
+        suscripciones: []
+    };
 }
 
+// Persistencia en LocalStorage 
 export function guardarUsuario(usuario) {
-  if (!usuario) return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(usuario));
+    if (!usuario) return;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(usuario));
 }
 
+// Carga de datos con manejo de errores 
 export function cargarUsuario() {
-  const datos = localStorage.getItem(STORAGE_KEY);
-  try {
-    return datos ? JSON.parse(datos) : null;
-  } catch (error) {
-    return null;
-  }
+    const datos = localStorage.getItem(STORAGE_KEY);
+    try {
+        return datos ? JSON.parse(datos) : null;
+    } catch (error) {
+        return null;
+    }
 }
 
+// Limpieza de sesión para el Logout
 export function limpiarUsuario() {
-  localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_KEY);
 }
 
+/*GESTIÓN DE ANIMES*/
 export function gestionarSuscripcion(anime) {
     const usuario = cargarUsuario();
     if (!usuario) return;
@@ -43,10 +49,10 @@ export function gestionarSuscripcion(anime) {
             text: `${anime.nombre} ya está en tu lista.`,
             icon: 'info'
         });
-        return false; 
+        return false;
     } else {
         usuario.suscripciones.push(anime);
-        guardarUsuario(usuario); 
+        guardarUsuario(usuario);
 
         Swal.fire({
             title: '¡Añadido!',
@@ -55,10 +61,11 @@ export function gestionarSuscripcion(anime) {
             timer: 1500,
             showConfirmButton: false
         });
-        return true; 
+        return true;
     }
 }
 
+/*CRUD: ACTUALIZAR PERFIL*/
 export function actualizarPerfil(nuevosDatos) {
     const usuario = cargarUsuario();
     if (!usuario) return;
@@ -72,11 +79,11 @@ export function actualizarPerfil(nuevosDatos) {
         icon: 'success',
         confirmButtonColor: '#9d4edd'
     });
+    
+    return usuarioActualizado; 
 }
 
-/**
- * Elimina una suscripción del perfil (DELETE)
- */
+/*CRUD: ELIMINAR SUSCRIPCIÓN*/
 export function cancelarSuscripcion(animeId) {
     const usuario = cargarUsuario();
     if (!usuario || !usuario.suscripciones) return;
@@ -94,23 +101,28 @@ export function cancelarSuscripcion(animeId) {
     });
 }
 
-export function asignarPlan(idPlan) {
+/*ASIGNACIÓN DE PLANES*/
+export function asignarPlan(idPlan, catalogo) {
     const usuario = cargarUsuario();
-    if (!usuario) return;
+    if (!usuario) return null;
 
-    import('../services/planService.js').then(module => {
-        const plan = module.catalogoPlanes.find(p => p.id === Number(idPlan));
-        usuario.planContratado = plan;
-        usuario.suscrito = false; 
-        guardarUsuario(usuario);
-    });
+    // Buscamos el plan por ID 
+    const plan = catalogo.find(p => p.id === Number(idPlan));
+    
+    usuario.planContratado = plan;
+    usuario.suscrito = false; 
+    
+    guardarUsuario(usuario);
+    return usuario; 
 }
 
+/*CONFIRMACIÓN DE PAGO*/
 export function confirmarPagoPlan() {
     const usuario = cargarUsuario();
-    if (!usuario) return;
+    if (!usuario) return null;
 
     usuario.suscrito = true; 
     guardarUsuario(usuario);
-    return true;
+    
+    return usuario; 
 }

@@ -1,46 +1,56 @@
-.card {
-    background: $card-bg;
-    border-radius: 14px;
-    border: 1px solid $card-border;
-    padding: 1.8rem;
-    backdrop-filter: blur(12px);
-    transition: all .3s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
+    .card {
+        background: $card-bg;
+        border-radius: 14px;
+        border: 1px solid $card-border;
+        padding: 1.8rem;
+        backdrop-filter: blur(12px);
+        transition: all .3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
 
-    h3, p, button, form {
-        position: relative; 
-        z-index: 10; 
+        h3, p, button, form {
+            position: relative; 
+            z-index: 10; 
+        }
+
+        /* Glow streaming */
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top,
+                        rgba($primary-color,.15),
+                        transparent 70%);
+            opacity: 0;
+            transition: .3s;
+            z-index: -1; 
+        }
+
+        &:hover::before {
+            opacity: 1;
+        }
     }
 
-    /* Glow streaming */
-    &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at top,
-                    rgba($primary-color,.15),
-                    transparent 70%);
-        opacity: 0;
-        transition: .3s;
-        z-index: -1; 
+    .plan-card {
+        background: rgba(0,0,0,.75);
+        padding: 20px;
+        border-radius: 12px;
+        transition: .25s;
+
+        &:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,.6);
+        }
     }
 
-    &:hover::before {
-        opacity: 1;
+.plan-card.active {
+    border: 2px solid $primary-color;
+    box-shadow: 0 0 15px rgba($primary-color, 0.4);
+    
+    .btn-disabled {
+        background: $primary-color;
+        opacity: 0.7;
+        cursor: not-allowed;
     }
 }
-
-.plan-card {
-    background: rgba(0,0,0,.75);
-    padding: 20px;
-    border-radius: 12px;
-    transition: .25s;
-
-    &:hover {
-        transform: translateY(-5px) scale(1.03);
-        box-shadow: 0 10px 25px rgba(0,0,0,.6);
-    }
-}
-

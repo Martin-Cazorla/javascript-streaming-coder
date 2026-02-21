@@ -1,117 +1,153 @@
-/**Lógica de la página de index */
-import { cargarUsuario, guardarUsuario, crearUsuario, limpiarUsuario } from "../services/userService.js";
+/** LÓGICA DE LA PÁGINA DE INDEX */
+import { cargarUsuario, guardarUsuario, crearUsuario, limpiarUsuario, asignarPlan, confirmarPagoPlan } from "../services/userService.js";
 import { catalogoPlanes } from "../services/planService.js";
 import { actualizarPerfil, mostrarPlanes, renderFactura, mostrarFormularioPerfil } from "../components/ui.js";
 import { mostrarLoader, ocultarLoader, qs, on } from "../utils/dom.js";
 
-// Inicializamos el usuario
-let usuarioActivo = cargarUsuario() || crearUsuario();
+// Inicialización robusta
+let usuarioActivo = cargarUsuario();
+if (!usuarioActivo) {
+    usuarioActivo = crearUsuario();
+    guardarUsuario(usuarioActivo); 
+}
+
+/* ===== FLUJO DE NEGOCIO ===== */
+
+function ejecutarSeleccion(id) {
+    const resultado = asignarPlan(id, catalogoPlanes);
+    if (resultado) {
+        usuarioActivo = resultado;
+        
+        if (!usuarioActivo.nombre || usuarioActivo.nombre === "Invitado") {
+            mostrarFormularioPerfil(usuarioActivo, ejecutarGuardado);
+        }
+        
+        actualizarInterfaz();
+    }
+}
 
 function ejecutarGuardado(nuevosDatos) {
-    //Actualización del estado en memoria
     usuarioActivo.email = nuevosDatos.email;
     usuarioActivo.nombre = nuevosDatos.nombre;
-    
-    //Persistencia en LocalStorage
     guardarUsuario(usuarioActivo);
     
-    //Gestión de UI: Ocultar formulario
     const formCont = qs("#form-container");
     if (formCont) formCont.classList.add("hidden");
     
-    // Feedback visual con SweetAlert2
     Swal.fire({
-        title: '¡Perfil Actualizado!',
-        text: `Hola ${usuarioActivo.nombre}, tus cambios se guardaron con éxito.`,
+        title: '¡Datos Guardados!',
+        text: 'Ahora puedes proceder al pago de tu suscripción.',
         icon: 'success',
-        timer: 2000,
-        showConfirmButton: false,
+        confirmButtonColor: '#9d4edd',
         background: '#1a1a1a',
         color: '#fff'
     });
-
-    // Salida asíncrona
-    actualizarInterfaz();
-}
-
-function ejecutarPago() {
-    usuarioActivo.suscrito = true;
-    guardarUsuario(usuarioActivo);
     
-    Swal.fire({
-        title: '¡Suscripción Activa! 🐉',
-        text: 'Ya puedes acceder al catálogo completo.',
-        icon: 'success',
-        confirmButtonText: 'Ir al Catálogo',
-        confirmButtonColor: '#9d4edd'
-    }).then(() => {
-        window.location.href = "catalog.html";
-    });
+    actualizarInterfaz();
 }
 
-function ejecutarSeleccion(id) {
-    const plan = catalogoPlanes.find(p => p.id === Number(id));
-    usuarioActivo.planContratado = plan;
-    usuarioActivo.suscrito = false;
-    guardarUsuario(usuarioActivo);
-    actualizarInterfaz();
+
+async function ejecutarPago() {
+    // Verificación de Seguridad
+    if (!usuarioActivo.planContratado) {
+        return Swal.fire('Atención', 'Por favor, selecciona un plan primero.', 'warning');
+    }
+
+    // Verificación de Identidad
+    if (!usuarioActivo.nombre || usuarioActivo.nombre === "Invitado") {
+        return Swal.fire({
+            title: 'Perfil Incompleto',
+            text: 'Debes completar tus datos de perfil antes de realizar el pago.',
+            icon: 'info',
+            confirmButtonText: 'Completar Perfil'
+        }).then(() => {
+            mostrarFormularioPerfil(usuarioActivo, ejecutarGuardado);
+        });
+    }
+
+    // Procesamiento de Tarjeta Ficticia
+    const { value: pagoConfirmado } = await Swal.fire({
+        title: 'Pago Seguro con Tarjeta',
+        background: '#1a1a1a',
+        color: '#fff',
+        html: `
+            <div class="card-form-sim">
+                <input id="card-num" class="swal2-input" placeholder="0000 0000 0000 0000" maxlength="16">
+                <div style="display:flex; gap:10px;">
+                    <input id="card-exp" class="swal2-input" placeholder="MM/YY" maxlength="5">
+                    <input id="card-cvv" class="swal2-input" placeholder="CVV" maxlength="3">
+                </div>
+            </div>
+        `,
+        confirmButtonText: 'Confirmar Suscripción',
+        showCancelButton: true,
+        preConfirm: () => {
+            const num = document.getElementById('card-num').value;
+            if (num.length < 16) return Swal.showValidationMessage('Número de tarjeta incompleto');
+            return true;
+        }
+    });
+
+    if (pagoConfirmado) {
+        // Lógica de pago del servicio
+        usuarioActivo = confirmarPagoPlan();
+        
+        // Salida y Redirección Final
+        Swal.fire({
+            title: '¡Pago Exitoso! 🐉',
+            text: 'Bienvenido a la comunidad KaijuStream. Redirigiendo...',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            window.location.href = "catalog.html"; 
+        });
+    }
 }
 
 /* ===== CONTROL DE INTERFAZ ===== */
 
 function actualizarInterfaz() {
+    usuarioActivo = cargarUsuario() || usuarioActivo;
+
     const hero = qs(".hero");
     const planesCont = qs("#planes-container");
     const perfilCont = qs("#perfil-container");
 
     hero?.classList.add("hidden");
 
-    // Manejo de Navbar
     if (usuarioActivo.email) {
         qs("#btn-login")?.classList.add("hidden");
         qs("#btn-logout")?.classList.remove("hidden");
     }
 
-    // Render de componentes y asegurar visibilidad
-    perfilCont?.classList.remove("hidden");
-    actualizarPerfil(usuarioActivo, () => {
-        const formCont = qs("#form-container");
-        formCont.classList.remove("hidden");
-        mostrarFormularioPerfil(usuarioActivo, ejecutarGuardado);
-    });
-    
-    if (!usuarioActivo.suscrito) {
+    if (perfilCont) {
+        perfilCont.classList.remove("hidden");
+        actualizarPerfil(usuarioActivo, () => {
+            qs("#form-container")?.classList.remove("hidden");
+            mostrarFormularioPerfil(usuarioActivo, ejecutarGuardado);
+        });
+    }
+
+    // Lógica de visualización dinámica
+    if (usuarioActivo.suscrito && usuarioActivo.planContratado) {
+        planesCont?.classList.add("hidden");
+        qs(".factura-animada")?.remove();
+    } else {
         planesCont?.classList.remove("hidden");
         mostrarPlanes(usuarioActivo, ejecutarSeleccion);
         renderFactura(usuarioActivo, ejecutarPago);
-    } else {
-        planesCont?.classList.add("hidden");
-        qs(".factura-animada")?.remove();
     }
 }
 
 /* ===== EVENTOS ===== */
-
-// Botón Comenzar
-const btnComenzar = qs("#btn-comenzar");
-if (btnComenzar) {
-    on(btnComenzar, "click", () => {
-        actualizarInterfaz();
-    });
-}
-
-// Botón Login
-on(qs("#btn-login"), "click", () => {
-    window.location.href = "login.html";
-});
-
-// Botón Logout
+on(qs("#btn-comenzar"), "click", actualizarInterfaz);
+on(qs("#btn-login"), "click", () => window.location.href = "login.html");
 on(qs("#btn-logout"), "click", () => {
     limpiarUsuario();
     window.location.href = "index.html";
 });
 
-/* ===== INIT CON LOADER ===== */
 const iniciarApp = () => {
     mostrarLoader();
     setTimeout(() => {
