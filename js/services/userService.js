@@ -93,3 +93,24 @@ export function cancelarSuscripcion(animeId) {
         showConfirmButton: false
     });
 }
+
+export function asignarPlan(idPlan) {
+    const usuario = cargarUsuario();
+    if (!usuario) return;
+
+    import('../services/planService.js').then(module => {
+        const plan = module.catalogoPlanes.find(p => p.id === Number(idPlan));
+        usuario.planContratado = plan;
+        usuario.suscrito = false; 
+        guardarUsuario(usuario);
+    });
+}
+
+export function confirmarPagoPlan() {
+    const usuario = cargarUsuario();
+    if (!usuario) return;
+
+    usuario.suscrito = true; 
+    guardarUsuario(usuario);
+    return true;
+}

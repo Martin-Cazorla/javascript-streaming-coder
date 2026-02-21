@@ -7,15 +7,30 @@ import { mostrarLoader, ocultarLoader, qs, on } from "../utils/dom.js";
 // Inicializamos el usuario
 let usuarioActivo = cargarUsuario() || crearUsuario();
 
-/* ===== FUNCIONES DE ACCIÓN ===== */
-
 function ejecutarGuardado(nuevosDatos) {
+    //Actualización del estado en memoria
     usuarioActivo.email = nuevosDatos.email;
     usuarioActivo.nombre = nuevosDatos.nombre;
+    
+    //Persistencia en LocalStorage
     guardarUsuario(usuarioActivo);
     
-    qs("#form-container").classList.add("hidden");
-    Swal.fire('¡Éxito!', 'Perfil actualizado', 'success');
+    //Gestión de UI: Ocultar formulario
+    const formCont = qs("#form-container");
+    if (formCont) formCont.classList.add("hidden");
+    
+    // Feedback visual con SweetAlert2
+    Swal.fire({
+        title: '¡Perfil Actualizado!',
+        text: `Hola ${usuarioActivo.nombre}, tus cambios se guardaron con éxito.`,
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+        background: '#1a1a1a',
+        color: '#fff'
+    });
+
+    // Salida asíncrona
     actualizarInterfaz();
 }
 

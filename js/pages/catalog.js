@@ -103,25 +103,54 @@ const renderizarSuscripciones = () => {
 
     suscripcionesContainer.innerHTML = "";
 
-    if (!usuario.suscripciones?.length) {
-        suscripcionesContainer.innerHTML = "<p class='text-muted small'>Lista vacía</p>";
+    // Mostrar el Plan de Pago Activo 
+    if (usuario.planContratado && usuario.suscrito) {
+        const planItem = document.createElement('div');
+        planItem.className = "plan-status-card mb-3"; 
+        planItem.innerHTML = `
+            <p style="margin:0; font-weight:bold; color:#9d4edd; font-size:0.8rem;">SUSCRIPCIÓN:</p>
+            <p style="margin:0; font-size:0.9rem; color: #fff;">${usuario.planContratado.nombre} ✅</p>
+            <hr style="border-color:#333; margin: 8px 0;">
+        `;
+        suscripcionesContainer.appendChild(planItem);
+    }
+
+    // Encabezado para la lista de favoritos
+    const tituloLista = document.createElement('p');
+    tituloLista.style.cssText = "font-size:0.7rem; color:#888; margin-bottom:5px; font-weight:bold;";
+    tituloLista.textContent = "MI LISTA DE ANIMES:";
+    suscripcionesContainer.appendChild(tituloLista);
+
+    // Manejo de lista vacía
+    if (!usuario.suscripciones || usuario.suscripciones.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'text-muted small';
+        p.textContent = "No tienes animes agregados.";
+        suscripcionesContainer.appendChild(p);
         return;
     }
 
+    // Renderizado de cada anime suscrito
     usuario.suscripciones.forEach(anime => {
         const item = document.createElement('div');
         item.className = "list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary mb-1 p-2";
         item.innerHTML = `
-            <span class="small">${anime.nombre}</span>
-            <button class="btn-cancelar" data-id="${anime.id}" aria-label="Eliminar">&times;</button>
+            <span class="small" style="max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                ${anime.nombre}
+            </span>
+            <button class="btn-cancelar" data-id="${anime.id}" aria-label="Eliminar" 
+                    style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-weight:bold;">
+                &times;
+            </button>
         `;
         suscripcionesContainer.appendChild(item);
     });
 
-    // Listeners para botones de cancelar 
+    //Re-asignación de Listeners para eliminar 
     suscripcionesContainer.querySelectorAll('.btn-cancelar').forEach(btn => {
         btn.addEventListener('click', () => {
-            cancelarSuscripcion(parseInt(btn.dataset.id));
+            const id = parseInt(btn.dataset.id);
+            cancelarSuscripcion(id);
             renderizarSuscripciones(); 
         });
     });
