@@ -1,69 +1,64 @@
-/* scss/pages/_player.scss */
-#player-container {
+@use "../abstracts/variables" as *;
+/* =========================================
+PLAYER PAGE
+========================================= */
+
+.player-container {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
     min-height: 80vh;
-
-    .video-section {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-
-        h1 {
-            color: $color-primary; // Usa tu variable de color (ej: morado/violeta)
-            font-size: 2rem;
-            text-shadow: 0 0 10px rgba($color-primary, 0.5);
-        }
-
-        .video-wrapper {
-            width: 100%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-
-            video {
-                width: 100%;
-                display: block;
-                aspect-ratio: 16 / 9;
-            }
-        }
-
-        .anime-info {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-
-            h2 {
-                color: #fff;
-                margin-bottom: 15px;
-                border-left: 4px solid $color-primary;
-                padding-left: 15px;
-            }
-
-            p {
-                color: #ccc;
-                line-height: 1.6;
-            }
-        }
-    }
 }
 
+.video-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.video-section h1 {
+    color: $primary-color;
+    font-size: 2rem;
+}
+
+.video-wrapper {
+    width: 100%;
+    background: black;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.video-wrapper video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+
+.anime-info {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.anime-info h2 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.anime-info p {
+    color: #ccc;
+}
+
+/* BOTON VOLVER */
 .btn-back {
     display: inline-block;
     margin: 20px;
     padding: 10px 20px;
-    color: #fff;
+    border: 1px solid $primary-color;
+    color: white;
     text-decoration: none;
-    border: 1px solid $color-primary;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+}
 
-    &:hover {
-        background: $color-primary;
-        box-shadow: 0 0 15px $color-primary;
-    }
+.btn-back:hover {
+    background: $primary-color;
 }

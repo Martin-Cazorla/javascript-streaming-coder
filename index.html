@@ -2,58 +2,87 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>KaijuStream</title>
+    <title>KaijuStream | Unleash the Titans</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="KaijuStream: plataforma de anime en streaming.">
+    <meta name="description" content="KaijuStream: plataforma de anime en streaming con los mejores planes.">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <div id="app-loader" class="loader hidden" aria-hidden="true">
+    <div id="app-loader" class="loader hidden" aria-hidden="true" role="status">
         <div class="spinner"></div>
     </div>
 
-<header class="site-header"> 
-    <h1 class="site-logo">
-        <a href="index.html">
-            <img src="assets/icons/logo-kaijustream.png" alt="KaijuStream - Unleash the Titans" class="logo-img">
-        </a>
-    </h1>
+    <header class="site-header"> 
+        <div class="header-container">
+            <h1 class="site-logo">
+                <a href="index.html">
+                    <img src="assets/icons/logo-kaijustream.png" alt="KaijuStream Home" class="logo-img">
+                </a>
+            </h1>
 
-    <nav class="nav-auth" aria-label="Autenticación usuario">
-        <button id="btn-login">Login</button>
-        <button id="btn-logout" class="hidden">Logout</button>
-    </nav>
-</header>
+            <nav class="nav-auth" aria-label="Autenticación de usuario">
+                <button id="btn-login" type="button">Login</button>
+                <button id="btn-logout" class="hidden" type="button">Cerrar Sesión</button>
+            </nav>
+        </div>
+    </header>
 
-    <main>
-        <section class="hero">
-            <h2>Tu plataforma de anime favorita</h2>
-            <p>Planes accesibles y contenido exclusivo.</p>
-            <button id="btn-comenzar" aria-label="Ver planes disponibles">
-                Comenzar
+    <main id="main-content">
+        <section class="hero" aria-labelledby="hero-title">
+            <h2 id="hero-title">Tu plataforma de anime favorita</h2>
+            <p>Planes accesibles y contenido exclusivo para fans de los Kaijus y el Shonen.</p>
+            <button id="btn-comenzar" aria-label="Ver todos los planes disponibles" type="button">
+                Comenzar ahora
             </button>
         </section>
 
-        <section id="planes-skeleton" class="planes hidden">
+        <section id="planes-skeleton" class="planes hidden" aria-hidden="true">
             <div class="skeleton-card"></div>
             <div class="skeleton-card"></div>
             <div class="skeleton-card"></div>
         </section>
 
-        <section id="planes-container" class="planes hidden"></section>
-        <section id="perfil-container" class="hidden"></section>
-        <section id="form-container" class="hidden"></section>
+        <section id="planes-container" class="planes hidden" aria-live="polite">
+            </section>
 
+        <section id="perfil-container" class="perfil-section hidden" aria-live="polite">
+            </section>
+
+        <section id="form-container" class="form-section hidden">
+            </section>
     </main>
 
-    <footer class="site-footer">
-        <p>© 2026 KaijuStream</p>
-    </footer>
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <img src="assets/logo-kaijustream.png" alt="KaijuStream" class="footer-logo">
+            <p>La mejor plataforma de streaming para los amantes del anime y los Kaijus.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Navegación</h4>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="pages/catalog.html">Catálogo</a></li>
+                <li><a href="#">Planes</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Soporte</h4>
+            <ul>
+                <li><a href="#">Ayuda</a></li>
+                <li><a href="#">Términos</a></li>
+                <li><a href="#">Privacidad</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 KaijuStream. Todos los derechos reservados.</p>
+    </div>
+</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="js/pages/index.js"></script>
-
 </body>
 </html>

@@ -1,182 +1,168 @@
-/*UI COMPONENTS*/
-import { catalogoPlanes, calcularPrecioFinal } from "../services/planService.js";
-import { qs } from "../utils/dom.js";
+/* UI COMPONENTS */
+import { calcularPrecioFinal, formatearMoneda } from "../services/planService.js";
+import { qs, create, on } from "../utils/dom.js";
 
-// --- RENDERIZADO DEL PERFIL ---
-export function actualizarPerfil(usuario, onEditar) {
+/** PERFIL: Gestión de usuario */
+export function actualizarPerfil(usuario, onEditar, onCancelarPlan) {
     const contenedor = qs("#perfil-container");
     if (!contenedor) return;
+    contenedor.innerHTML = "";
 
-    contenedor.classList.remove("hidden");
-    contenedor.innerHTML = ""; 
-
-    const card = document.createElement("div");
-    card.className = "card profile-card";
+    const card = create("div", "card profile-card");
+    const title = create("h3", "", "Mi Perfil de Usuario");
     
-    card.innerHTML = `
-        <h3 style="color: #9d4edd">Mi Perfil Kaiju</h3>
-        <div class="profile-info">
-            <p><strong>Usuario:</strong> ${usuario.nombre || "Invitado"}</p>
-            <p><strong>Email:</strong> ${usuario.email || "No registrado"}</p>
-            <p><strong>Plan:</strong> <span class="badge-plan">${usuario.planContratado?.nombre || "Sin plan"}</span></p>
-            <p><strong>Estado:</strong> ${usuario.suscrito ? "Activo ✅" : "Pendiente de pago ⏳"}</p>
-        </div>
-    `;
+    const infoList = create("ul", "profile-info");
+    infoList.append(
+        create("li", "", `Nombre: ${usuario.nombre}`),
+        create("li", "", `Email: ${usuario.email}`),
+        create("li", "", `Plan: ${usuario.planContratado ? usuario.planContratado.nombre : 'Ninguno'} ${usuario.suscrito ? '✅ (Activo)' : ''}`)
+    );
 
-    const acciones = document.createElement("div");
-    acciones.className = "actions-container";
-    acciones.style.marginTop = "1rem";
+    const acciones = create("div", "profile-actions");
+    
+    if (usuario.suscrito) {
+        const btnCatalogo = create("button", "btn-primary", "Explorar Catálogo");
+        btnCatalogo.style.backgroundColor = "#2a9d8f"; 
+        on(btnCatalogo, "click", () => location.assign("pages/catalog.html"));
+        acciones.append(btnCatalogo);
+    }
 
-    const btnEditar = document.createElement("button");
-    btnEditar.textContent = "Editar Datos";
-    btnEditar.className = "btn-secondary";
-    btnEditar.addEventListener("click", (e) => { 
-        e.preventDefault(); 
-        onEditar(); 
-    });
+    const btnEditar = create("button", "btn-secondary", "Editar Datos");
+    on(btnEditar, "click", onEditar);
+    acciones.append(btnEditar);
 
-    acciones.appendChild(btnEditar);
-    card.appendChild(acciones);
+    if (usuario.planContratado) {
+        const btnCancelar = create("button", "btn-danger", "Cancelar Plan");
+        on(btnCancelar, "click", onCancelarPlan);
+        acciones.append(btnCancelar);
+    }
+
+    card.append(title, infoList, acciones);
     contenedor.appendChild(card);
 }
 
-// --- RENDERIZADO DE LA FACTURA ---
-export function renderFactura(usuario, onConfirmarPago) {
-    const contenedorPerfil = qs("#perfil-container");
-    if (!usuario.planContratado || usuario.suscrito || !contenedorPerfil) return;
-
-    const previas = document.querySelectorAll(".factura-animada");
-    previas.forEach(p => p.remove());
-
-    const totalConIVA = calcularPrecioFinal(usuario.planContratado.precio);
-
-    const facturaDiv = document.createElement("div");
-    facturaDiv.className = "card factura-animada shadow-vlow";
-    facturaDiv.style.marginTop = "20px";
-    
-    facturaDiv.innerHTML = `
-        <h3 style="color: #9d4edd">Resumen de Pago</h3>
-        <p>Plan seleccionado: <strong>${usuario.planContratado.nombre}</strong></p>
-        <p>Subtotal: $${usuario.planContratado.precio}</p>
-        <p>Total (IVA incluido): <span class="text-highlight">$${totalConIVA.toFixed(2)}</span></p>
-    `;
-
-    const btnPagar = document.createElement("button");
-    btnPagar.textContent = "Confirmar Suscripción";
-    btnPagar.className = "btn-primary";
-    btnPagar.style.marginTop = "1rem";
-    
-    btnPagar.addEventListener("click", (e) => {
-        e.preventDefault();
-        onConfirmarPago();
-    });
-
-    facturaDiv.appendChild(btnPagar);
-    contenedorPerfil.appendChild(facturaDiv);
-}
-
-// --- RENDERIZADO DEL CATÁLOGO ---
-export const renderGrid = (animes, container) => {
+/** GRID ANIMES*/
+export function renderGrid(animes, container) {
+    if (!container) return;
     container.innerHTML = ""; 
 
-    if (animes.length === 0) {
-        container.innerHTML = `<p class="no-results">No se encontraron animes. Intenta con otro nombre.</p>`;
-        return;
-    }
-
     animes.forEach(anime => {
-        const article = document.createElement('article');
-        article.classList.add('anime-card');
+        const card = create("article", "anime-card");
+        card.setAttribute("data-id", anime.id);
 
-        article.innerHTML = `
-            <div class="card-image">
-                <img src="${anime.imagen}" alt="Portada de ${anime.nombre}" loading="lazy">
-            </div>
-            <div class="card-content">
-                <span class="badge">${anime.genero.toUpperCase()}</span>
-                <h3>${anime.nombre}</h3>
-                <p>${anime.descripcion}</p>
-                <button class="btn-primary btn-suscribir" data-id="${anime.id}">
-                    + Suscribirse
-                </button>
-            </div>
-        `;
-        container.appendChild(article);
+        const img = create("img", "anime-img");
+        img.src = anime.imagen;
+        img.alt = anime.nombre;
+
+        const info = create("div", "anime-info");
+        const title = create("h4", "", anime.nombre);
+        const genero = create("span", "badge", anime.genero);
+        const desc = create("p", "small", anime.descripcion);
+
+        const btnSuscribir = create("button", "btn-suscribir", "+ Mi Lista");
+        btnSuscribir.setAttribute("data-id", anime.id);
+
+        info.append(title, genero, desc, btnSuscribir);
+        card.append(img, info);
+        container.appendChild(card);
     });
-};
+}
 
-// --- RENDERIZADO DE PLANES ---
-export function mostrarPlanes(usuario, onSelectPlan) {
-    const contenedor = qs("#planes-container");
-    if (!contenedor) return;
-    
-    contenedor.classList.remove("hidden");
-    contenedor.innerHTML = "";
-    
-    catalogoPlanes.forEach(plan => {
-        const card = document.createElement("div");
-        card.className = `plan-card ${usuario.planContratado?.id === plan.id ? 'active' : ''}`;
+/** PLANES: Renderizado de planes de suscripción */
+export function mostrarPlanes(catalogo, usuario, onSeleccionar) {
+    const cont = qs("#planes-container");
+    if (!cont) return;
+    cont.innerHTML = "<h2>Elige tu Plan Kaiju</h2>";
+
+    const grid = create("div", "planes-grid");
+
+    catalogo.forEach(plan => {
+        const planCard = create("article", "card plan-card");
+        const h4 = create("h4", "", plan.nombre);
+        const precioTotal = calcularPrecioFinal(plan.precio);
+        const precioTxt = create("p", "price", formatearMoneda(precioTotal));
+        const desc = create("p", "", plan.descripcion);
         
-        card.innerHTML = `
-            <h3>${plan.nombre}</h3>
-            <p class="plan-price">$${plan.precio}</p>
-            <p class="plan-details">${plan.detalles}</p>
-        `;
-        
-        const btn = document.createElement("button");
-        const esSeleccionado = usuario.planContratado?.id === plan.id;
-        
-        btn.textContent = esSeleccionado ? "Plan Actual" : "Seleccionar Plan";
-        btn.className = esSeleccionado ? "btn-disabled" : "btn-primary";
-        btn.disabled = esSeleccionado;
-        
-        if (!esSeleccionado) {
-            btn.addEventListener("click", () => onSelectPlan(plan.id));
+        let textoBtn = "Seleccionar";
+        if (usuario.planContratado?.id === plan.id) {
+            textoBtn = usuario.suscrito ? "Plan Actual" : "Pendiente de Pago";
         }
+
+        const btn = create("button", "btn-primary", textoBtn);
+        btn.type = "button";
         
-        card.appendChild(btn);
-        contenedor.appendChild(card);
+        if (usuario.planContratado?.id === plan.id && usuario.suscrito) {
+            btn.disabled = true;
+        }
+
+        on(btn, "click", () => onSeleccionar(plan.id));
+
+        planCard.append(h4, precioTxt, desc, btn);
+        grid.append(planCard);
     });
-}   
 
-// --- RENDERIZADO DE FORMULARIO DE PERFIL ---
+    cont.appendChild(grid);
+}
+
+/**FACTURA: Renderiza el resumen de pago asíncrono.*/
+export function renderFactura(usuario, onPagar) {
+    const cont = qs("#form-container"); 
+    if (!usuario.planContratado || usuario.suscrito) return;
+
+    const facturaDiv = create("div", "factura-box");
+    facturaDiv.innerHTML = "<h3>Resumen de Suscripción</h3>";
+
+    const detalle = create("p", "", `Has seleccionado el plan: ${usuario.planContratado.nombre}`);
+    const total = calcularPrecioFinal(usuario.planContratado.precio);
+    const monto = create("strong", "total-monto", `Total a pagar (IVA incl.): ${formatearMoneda(total)}`);
+    
+    const btnPagar = create("button", "btn-success", "Proceder al Pago");
+    btnPagar.type = "button";
+    btnPagar.style.display = "block";
+    btnPagar.style.marginTop = "15px";
+    btnPagar.addEventListener("click", onPagar);
+
+    facturaDiv.append(detalle, monto, btnPagar);
+    cont.appendChild(facturaDiv);
+}
+
+/**FORMULARIO: Con etiquetas de accesibilidad y validación*/
 export function mostrarFormularioPerfil(usuario, onGuardar) {
-    const contenedor = qs("#form-container");
-    if (!contenedor) return;
+    const cont = qs("#form-container");
+    if (!cont) return;
+    cont.innerHTML = "<h3>Completa tu información</h3>";
 
-    contenedor.classList.remove("hidden");
-    contenedor.innerHTML = `
-        <div class="card form-card">
-            <h3 style="color: #9d4edd">Actualizar Mis Datos</h3>
-            <form id="form-usuario-dinamico">
-                <div class="form-group">
-                    <label for="input-nombre">Nombre:</label>
-                    <input type="text" id="input-nombre" value="${usuario.nombre || ''}" required>
-                </div>
-                <div class="form-group">
-                    <label for="input-email">Email:</label>
-                    <input type="email" id="input-email" value="${usuario.email || ''}" required>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">Guardar Cambios</button>
-                    <button type="button" id="btn-cancelar-form" class="btn-secondary">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    `;
+    const form = create("form", "perfil-form");
+    
+    const crearCampo = (id, labelText, value, type = "text") => {
+        const group = create("div", "form-group");
+        const label = create("label", "", labelText);
+        label.setAttribute("for", id);
+        const input = create("input");
+        input.id = id;
+        input.type = type;
+        input.value = value || "";
+        input.required = true;
+        input.placeholder = labelText; 
+        group.append(label, input);
+        return { group, input };
+    };
 
-    // Listener del formulario
-    const form = qs("#form-usuario-dinamico");
+    const { group: gNom, input: iNom } = crearCampo("f-nombre", "Nombre:", usuario.nombre);
+    const { group: gEma, input: iEma } = crearCampo("f-email", "Email:", usuario.email, "email");
+
+    const btnSubmit = create("button", "btn-success", "Guardar Cambios");
+    btnSubmit.type = "submit";
+
+    form.append(gNom, gEma, btnSubmit);
+
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         onGuardar({
-            nombre: qs("#input-nombre").value.trim(),
-            email: qs("#input-email").value.trim()
+            nombre: iNom.value,
+            email: iEma.value
         });
     });
 
-    // Listener para cerrar el formulario
-    qs("#btn-cancelar-form").addEventListener("click", () => {
-        contenedor.classList.add("hidden");
-    });
+    cont.appendChild(form);
 }

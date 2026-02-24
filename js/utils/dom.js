@@ -1,19 +1,73 @@
-/* ===== LOADER GLOBAL ===== */
+/* =========================================
+    LOADER GLOBAL
+========================================= */
+
 export function mostrarLoader() {
-  document.getElementById("app-loader")?.classList.remove("hidden");
+  const loader = qs("#app-loader"); 
+  if (loader) {
+    loader.classList.remove("hidden");
+    loader.setAttribute("aria-hidden", "false");
+  }
 }
 
 export function ocultarLoader() {
-  document.getElementById("app-loader")?.classList.add("hidden");
+  const loader = qs("#app-loader");
+  if (loader) {
+    loader.classList.add("hidden");
+    loader.setAttribute("aria-hidden", "true");
+  }
 }
 
-/* ===== HELPERS DOM ===== */
-export function qs(selector) {
-  return document.querySelector(selector);
+
+/* =========================================
+    SELECTORES DOM
+========================================= */
+
+// Selecciona un único elemento
+export function qs(selector, parent = document) {
+  return parent.querySelector(selector);
 }
+
+// Selecciona múltiples elementos y devuelve un Array 
+export function qsa(selector, parent = document) {
+  return [...parent.querySelectorAll(selector)];
+}
+
+
+/* =========================================
+    EVENTOS
+========================================= */
 
 export function on(element, event, handler) {
-  if (element) {
+  if (element && typeof handler === 'function') {
     element.addEventListener(event, handler);
+  }
+}
+
+
+/* =========================================
+    CREAR ELEMENTOS
+========================================= */
+
+export function create(tag, className = "", content = "", isHTML = false) {
+  const el = document.createElement(tag);
+
+  if (className) el.className = className;
+
+  if (content) {
+    isHTML ? (el.innerHTML = content) : (el.textContent = content);
+  }
+
+  return el;
+}
+
+
+/* =========================================
+    LIMPIAR ELEMENTO
+========================================= */
+
+export function clear(element) {
+  if (element) {
+    element.replaceChildren(); 
   }
 }

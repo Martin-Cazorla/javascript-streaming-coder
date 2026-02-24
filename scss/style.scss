@@ -1,24 +1,19 @@
-/* ABSTRACTS */
-@import "abstracts/variables";
-@import "abstracts/mixins";
+@use "abstracts/variables";
+@use "abstracts/mixins";
 
-/* BASE */
-@import "base/reset";
-@import "base/base";
+@use "base/reset";
+@use "base/base";
 
-/* LAYOUT */
-@import "layout/header";
-@import "layout/footer";
-@import "layout/grid";
+@use "layout/header";
+@use "layout/footer";
+@use "layout/grid";
 
-/* COMPONENTS */
-@import "components/buttons";
-@import "components/cards";
-@import "components/loader";
-@import "components/skeleton";
+@use "components/buttons";
+@use "components/cards";
+@use "components/loader";
+@use "components/skeleton";
 
-/* PAGES */
-@import "pages/index";
-@import "pages/login";
-@import "pages/catalog";
-@import "pages/player";
+@use "pages/index";
+@use "pages/login";
+@use "pages/catalog";
+@use "pages/player";

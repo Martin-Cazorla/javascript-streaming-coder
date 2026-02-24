@@ -1,3 +1,4 @@
+@use "../abstracts/variables" as *;
 // Estructura base para todas las tarjetas (Planes y Animes)
 .card {
     background: $card-bg;
@@ -35,45 +36,57 @@
 }
 
 // Específico para el catálogo de animes
+
 .anime-card {
-    @extend .card; 
-    padding: 0; 
-    cursor: pointer;
+    @extend .card;
+    padding: 0;
     display: flex;
     flex-direction: column;
+    border: 1px solid rgba(v.$primary-color, 0.1);
 
-    .anime-img-container {
+    .anime-img {
         width: 100%;
-        height: 250px;
-        overflow: hidden;
-        
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
+        height: 350px; 
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .anime-content {
-        padding: 1.2rem;
+    .anime-info {
+        padding: 1.5rem;
+        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
         
-        h3 {
-            font-size: 1.1rem;
+        h4 {
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: #fff;
+            color: white;
         }
-        
+
+        .badge {
+            background: v.$primary-color;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
         p {
+            margin-top: 1rem;
+            color: v.$text-muted;
             font-size: 0.85rem;
-            color: #ccc;
-            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     }
 
     &:hover {
-        transform: translateY(-8px);
-        img { transform: scale(1.1); }
+        transform: translateY(-10px);
+        border-color: v.$primary-color;
+        
+        .anime-img {
+            transform: scale(1.05);
+        }
     }
 }
 

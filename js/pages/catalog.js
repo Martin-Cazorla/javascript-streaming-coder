@@ -1,109 +1,87 @@
+/* CATALOG.JS */
 import { fetchAnimes } from '../services/animeService.js';
 import { renderGrid } from '../components/ui.js';
 import { 
     cargarUsuario, 
     limpiarUsuario, 
-    gestionarSuscripcion, 
     actualizarPerfil, 
-    cancelarSuscripcion 
+    gestionarSuscripcionAnime, 
+    quitarAnimeDeLista 
 } from '../services/userService.js';
+import { qs, on, create, clear } from '../utils/dom.js';
 
-const gridContainer = document.getElementById('anime-grid');
-const searchInput = document.getElementById('search-input');
-const genreFilter = document.getElementById('genre-filter');
-const userDisplay = document.getElementById('user-display');
-const btnLogout = document.getElementById('btn-logout');
-const btnEditProfile = document.getElementById('btn-edit-profile'); 
-const suscripcionesContainer = document.getElementById('mis-suscripciones-lista');
+const gridContainer = qs('#anime-grid');
+const searchInput = qs('#search-input');
+const genreFilter = qs('#genre-filter');
+const userDisplay = qs('#user-display');
+const btnLogout = qs('#btn-logout');
+const btnEditProfile = qs('#btn-edit-profile'); 
+const suscripcionesContainer = qs('#mis-suscripciones-lista');
 
 let allAnimes = []; 
 
 const cargarCatalogoJSON = async () => {
     try {
         allAnimes = await fetchAnimes();
-        
-        if (!allAnimes || allAnimes.length === 0) {
-            throw new Error("La base de datos de animes está vacía.");
-        }
-
+        if (!allAnimes || allAnimes.length === 0) throw new Error("Base de datos vacía");
         renderizarYEscuchar(allAnimes);
         renderizarSuscripciones(); 
     } catch (error) {
-        console.error("Error en la carga inicial:", error);
-        Swal.fire({
-            title: 'Error de conexión',
-            text: 'No se pudo conectar con el servidor de KaijuStream.',
-            icon: 'error',
-            confirmButtonColor: '#9d4edd'
-        });
+        console.error(error);
+        Swal.fire({ title: 'Error', text: 'No se pudo cargar el catálogo.', icon: 'error' });
     }
 };
 
-const init = async () => {
-    const datosUsuario = cargarUsuario();
-    
-    if (!datosUsuario) {
-        window.location.href = 'login.html';
+const renderizarSuscripciones = () => {
+    const usuario = cargarUsuario();
+    if (!suscripcionesContainer) return;
+    clear(suscripcionesContainer);
+
+    if (usuario.planContratado && usuario.suscrito) {
+        const planCard = create('div', 'plan-status-card mb-3');
+        planCard.append(create('p', 'plan-badge', 'MI SUSCRIPCIÓN:'), create('p', 'plan-name', `${usuario.planContratado.nombre} ✅`));
+        suscripcionesContainer.appendChild(planCard);
+    }
+
+    suscripcionesContainer.appendChild(create('p', 'sidebar-title', 'MI LISTA DE ANIMES:'));
+
+    if (!usuario.suscripciones || usuario.suscripciones.length === 0) {
+        suscripcionesContainer.appendChild(create('p', 'text-muted small', 'Tu lista está vacía.'));
         return;
     }
 
-    userDisplay.textContent = `Hola, ${datosUsuario.nombre || 'Titán'} 👋`;
-
-    btnLogout.addEventListener('click', () => {
-        limpiarUsuario();
-        window.location.href = '../index.html';
-    });
-
-    btnEditProfile?.addEventListener('click', async () => {
-        const usuarioActual = cargarUsuario();
-        const { value: formValues } = await Swal.fire({
-            title: 'Configuración de Perfil',
-            background: '#1a1a1a',
-            color: '#fff',
-            html: `
-                <input id="swal-nombre" class="swal2-input" placeholder="Nombre" value="${usuarioActual.nombre}">
-                <input id="swal-email" class="swal2-input" placeholder="Email" value="${usuarioActual.email}">
-            `,
-            confirmButtonText: 'Guardar',
-            confirmButtonColor: '#9d4edd',
-            showCancelButton: true,
-            preConfirm: () => {
-                const nombre = document.getElementById('swal-nombre').value.trim();
-                const email = document.getElementById('swal-email').value.trim();
-                if (!nombre || !email) return Swal.showValidationMessage('Campos obligatorios');
-                return { nombre, email };
-            }
+    usuario.suscripciones.forEach(anime => {
+        const item = create('div', 'list-group-item d-flex justify-content-between align-items-center bg-dark text-white p-2 mb-1');
+        const span = create('span', 'small anime-link', anime.nombre);
+        on(span, 'click', () => seleccionarAnime(anime));
+        const btnRemove = create('button', 'btn-cancelar', '×');
+        on(btnRemove, 'click', (e) => {
+            e.stopPropagation();
+            quitarAnimeDeLista(anime.id);
+            renderizarSuscripciones();
         });
-
-        if (formValues) {
-            actualizarPerfil(formValues);
-            userDisplay.textContent = `Hola, ${formValues.nombre} 👋`;
-        }
+        item.append(span, btnRemove);
+        suscripcionesContainer.appendChild(item);
     });
-
-    await cargarCatalogoJSON();
-
-    searchInput.addEventListener('input', applyFilters);
-    genreFilter.addEventListener('change', applyFilters);
 };
 
 const renderizarYEscuchar = (lista) => {
     renderGrid(lista, gridContainer);
     
+    // Asignar eventos a los botones de la grilla
     gridContainer.querySelectorAll('.btn-suscribir').forEach(boton => {
-        boton.addEventListener('click', (e) => {
+        on(boton, 'click', (e) => {
             e.stopPropagation();
             const id = parseInt(boton.getAttribute('data-id'));
             const anime = allAnimes.find(a => a.id === id);
-            
-            if (gestionarSuscripcion(anime)) {
-                renderizarSuscripciones();
-            }
+            const res = gestionarSuscripcionAnime(anime);
+            if (res.success) renderizarSuscripciones();
+            else Swal.fire({ text: res.message, icon: 'info', timer: 1000, showConfirmButton: false });
         });
     });
 
     gridContainer.querySelectorAll('.anime-card').forEach(card => {
-        card.addEventListener('click', () => {
+        on(card, 'click', () => {
             const id = parseInt(card.getAttribute('data-id'));
             const anime = allAnimes.find(a => a.id === id);
             seleccionarAnime(anime);
@@ -111,80 +89,40 @@ const renderizarYEscuchar = (lista) => {
     });
 };
 
-const renderizarSuscripciones = () => {
-    const usuario = cargarUsuario();
-    if (!suscripcionesContainer) return;
-
-    suscripcionesContainer.innerHTML = "";
-
-    if (usuario.planContratado && usuario.suscrito) {
-        const planItem = document.createElement('div');
-        planItem.className = "plan-status-card mb-3"; 
-        planItem.innerHTML = `
-            <p style="margin:0; font-weight:bold; color:#9d4edd; font-size:0.8rem;">SUSCRIPCIÓN:</p>
-            <p style="margin:0; font-size:0.9rem; color: #fff;">${usuario.planContratado.nombre} ✅</p>
-            <hr style="border-color:#333; margin: 8px 0;">
-        `;
-        suscripcionesContainer.appendChild(planItem);
-    }
-
-    const tituloLista = document.createElement('p');
-    tituloLista.style.cssText = "font-size:0.7rem; color:#888; margin-bottom:5px; font-weight:bold;";
-    tituloLista.textContent = "MI LISTA DE ANIMES:";
-    suscripcionesContainer.appendChild(tituloLista);
-
-    if (!usuario.suscripciones || usuario.suscripciones.length === 0) {
-        const p = document.createElement('p');
-        p.className = 'text-muted small';
-        p.textContent = "No tienes animes agregados.";
-        suscripcionesContainer.appendChild(p);
-        return;
-    }
-
-    usuario.suscripciones.forEach(anime => {
-        const item = document.createElement('div');
-        item.className = "list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-secondary mb-1 p-2";
-        item.innerHTML = `
-            <span class="small" style="max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor:pointer;">
-                ${anime.nombre}
-            </span>
-            <button class="btn-cancelar" data-id="${anime.id}" aria-label="Eliminar" 
-                    style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-weight:bold;">
-                &times;
-            </button>
-        `;
-        
-        item.querySelector('span').addEventListener('click', () => seleccionarAnime(anime));
-        suscripcionesContainer.appendChild(item);
-    });
-
-    suscripcionesContainer.querySelectorAll('.btn-cancelar').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const id = parseInt(btn.dataset.id);
-            cancelarSuscripcion(id);
-            renderizarSuscripciones(); 
-        });
-    });
-};
-
 const applyFilters = () => {
     const searchTerm = searchInput.value.toLowerCase();
     const selectedGenre = genreFilter.value;
-    
-    const filtered = allAnimes.filter(anime => {
-        const matchesName = anime.nombre.toLowerCase().includes(searchTerm);
-        const matchesGenre = selectedGenre === "all" || anime.genero === selectedGenre;
-        return matchesName && matchesGenre;
-    });
-    
+    const filtered = allAnimes.filter(a => (a.nombre.toLowerCase().includes(searchTerm)) && (selectedGenre === "all" || a.genero === selectedGenre));
     renderizarYEscuchar(filtered);
 };
 
 const seleccionarAnime = (anime) => {
-    if (!anime) return;
     localStorage.setItem('selectedAnime', JSON.stringify(anime));
-    window.location.href = 'reproductor.html'; 
+    location.assign('reproductor.html'); 
 };
 
-document.addEventListener('DOMContentLoaded', init);
+const init = async () => {
+    const datosUsuario = cargarUsuario();
+    if (!datosUsuario) return location.replace('login.html');
+    if (userDisplay) userDisplay.textContent = `Hola, ${datosUsuario.nombre} 👋`;
+
+    on(btnLogout, 'click', () => { limpiarUsuario(); location.assign('../index.html'); });
+
+    on(btnEditProfile, 'click', async () => {
+        const { value: formValues } = await Swal.fire({
+            title: 'Editar Perfil',
+            html: `<input id="swal-name" class="swal2-input" value="${datosUsuario.nombre}">`,
+            preConfirm: () => ({ nombre: qs('#swal-name').value })
+        });
+        if (formValues) {
+            actualizarPerfil(formValues);
+            location.reload();
+        }
+    });
+
+    await cargarCatalogoJSON();
+    on(searchInput, 'input', applyFilters);
+    on(genreFilter, 'change', applyFilters);
+};
+
+init();

@@ -1,3 +1,9 @@
+@use "../abstracts/variables" as *;
+
+/* =========================================
+    BASE GLOBAL
+========================================= */
+
 html {
     font-size: clamp(14px, 1vw, 18px);
 }
@@ -5,42 +11,39 @@ html {
 body {
     font-family: $font-main;
     color: $text-light;
-
-    background:
-        linear-gradient($overlay-dark, $overlay-dark),
-        url('../assets/images/img-animes-juntos.jpg')
-        no-repeat center center fixed;
-
+    
+    // Configuración de fondo con overlay para legibilidad
+    background: linear-gradient($overlay-dark, $overlay-dark),
+                url('../assets/images/img-animes-juntos.jpg') no-repeat center center fixed;
     background-size: cover;
-
+    
     min-height: 100vh;
     overflow-x: hidden;
-
     display: flex;
     flex-direction: column;
 }
 
+/* MAIN GLOBAL */
 main {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-    padding: 2rem 0;
+    padding: 2rem;
 }
 
+/* CONTENEDOR */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-    width: 100%;
 }
 
-img, video {
+/* MEDIA */
+img,
+video {
     max-width: 100%;
     height: auto;
 }
 
+/* BOTONES */
 button {
-    font-size: clamp(.8rem, 1vw, 1rem);
+    font-family: inherit;
 }

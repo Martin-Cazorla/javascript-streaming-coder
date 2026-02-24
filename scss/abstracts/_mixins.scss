@@ -1,11 +1,23 @@
+@use "variables" as *;
+
+/* =========================================
+    RESPONSIVE MIXINS
+========================================= */
+
+@mixin mobile {
+    @media (min-width: $mobile) {
+        @content;
+    }
+}
+
 @mixin tablet {
-  @media (min-width: $tablet) {
-    @content;
-  }
+    @media (min-width: $tablet) {
+        @content;
+    }
 }
 
 @mixin desktop {
-  @media (min-width: $desktop) {
-    @content;
-  }
+    @media (min-width: $desktop) {
+        @content;
+    }
 }

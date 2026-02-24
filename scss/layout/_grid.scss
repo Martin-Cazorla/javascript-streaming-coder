@@ -1,24 +1,27 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+/* =========================================
+    GRID DE PLANES Y CONTENIDOS
+========================================= */
+
 .planes {
     display: grid;
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     gap: 2rem;
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    transition: $transition-smooth;
 
-    // Usando tu mixin de tablet/desktop
+    /* TABLET: 2 Columnas */
     @include tablet {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
     }
 
+    /* DESKTOP: 3 Columnas */
     @include desktop {
-        grid-template-columns: repeat(3, 1fr); 
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem; 
     }
-}
-
-// Clase de utilidad para contenedores generales
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
 }

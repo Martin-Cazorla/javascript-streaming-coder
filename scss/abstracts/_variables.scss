@@ -1,31 +1,46 @@
-/* VARIABLES - PALETA DE COLORES */
+/* =========================================
+VARIABLES GLOBALES
+========================================= */
 
-// Colores principales
-$primary-color: #9d4edd;   
-$secondary-color: #0f0c29;  
-$accent-color: #c77dff;     
+/* COLORES PRINCIPALES */
 
-// Colores de Texto
+$primary-color: #9d4edd;
+$secondary-color: #0f0c29;
+$accent-color: #c77dff;
+
+
+/* TEXTO */
+
 $text-light: #ffffff;
 $text-muted: #b3b3b3;
 
-// Colores Funcionales y de Estado
-$color-danger: #ff4655;     
-$color-success: #00cf65;   
-$color-warning: #ffb703;   
 
-// Componentes 
+/* ESTADOS */
+
+$color-danger: #ff4655;
+$color-success: #00cf65;
+$color-warning: #ffb703;
+
+
+/* COMPONENTES */
+
 $card-bg: rgba(255, 255, 255, 0.05);
 $card-border: rgba(255, 255, 255, 0.1);
-$overlay-dark: rgba(15, 12, 41, 0.85); 
+$overlay-dark: rgba(15, 12, 41, 0.85);
 
-// Tipografías
+
+/* TIPOGRAFIA */
+
 $font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-// Breakpoints
+
+/* BREAKPOINTS */
+
 $mobile: 480px;
 $tablet: 768px;
 $desktop: 1024px;
 
-// Mixins de transición globales
+
+/* TRANSICIONES */
+
 $transition-smooth: all 0.3s ease;

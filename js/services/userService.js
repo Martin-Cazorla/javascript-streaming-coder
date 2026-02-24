@@ -1,139 +1,132 @@
-/*SERVICIO DE USUARIO - GESTIÓN DE DATOS Y PERSISTENCIA*/
-
+/* SERVICIO DE USUARIO */
 const STORAGE_KEY = "usuarioLogueado";
 
-// Estructura inicial del objeto usuario 
+/** * CREAR USUARIO */
 export function crearUsuario(email = "", nombre = "Invitado") {
-    return {
+    const usuario = {
         nombre,
         email,
         planContratado: null,
-        suscrito: false, 
-        suscripciones: []
+        suscrito: false,
+        suscripciones: [] 
     };
+
+    guardarUsuario(usuario);
+    return usuario;
 }
 
-// Persistencia en LocalStorage 
+/** * GUARDAR EN STORAGE  */
 export function guardarUsuario(usuario) {
     if (!usuario) return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(usuario));
 }
 
-// Carga de datos con manejo de errores 
+/** * CARGAR DESDE STORAGE  */
 export function cargarUsuario() {
     const datos = localStorage.getItem(STORAGE_KEY);
+    if (!datos) return null;
+
     try {
-        return datos ? JSON.parse(datos) : null;
+        return JSON.parse(datos);
     } catch (error) {
-        console.error("Error al parsear usuario de LocalStorage:", error);
+        console.error("Error al parsear el usuario:", error);
         return null;
     }
 }
 
-// Limpieza de sesión para el Logout
+/** * LOGOUT / LIMPIAR */
 export function limpiarUsuario() {
     localStorage.removeItem(STORAGE_KEY);
 }
 
-/* GESTIÓN DE ANIMES */
-export function gestionarSuscripcion(anime) {
-    const usuario = cargarUsuario();
-    if (!usuario) return false;
-
-    // Asegura que el array exista antes de operar
-    usuario.suscripciones = usuario.suscripciones || [];
-
-    const yaExiste = usuario.suscripciones.some(fav => fav.id === anime.id);
-
-    if (yaExiste) {
-        Swal.fire({
-            title: '¡Ya lo tienes!',
-            text: `${anime.nombre} ya está en tu lista de KaijuStream.`,
-            icon: 'info',
-            confirmButtonColor: '#9d4edd'
-        });
-        return false;
-    } 
-    
-    // Agrega el nuevo objeto al array 
-    usuario.suscripciones.push(anime);
-    guardarUsuario(usuario);
-
-    Swal.fire({
-        title: '¡Añadido!',
-        text: `${anime.nombre} se sumó a tus suscripciones.`,
-        icon: 'success',
-        timer: 1500,
-        showConfirmButton: false
-    });
-    return true;
-}
-
-/* CRUD: ACTUALIZAR PERFIL */
-export function actualizarPerfil(nuevosDatos) {
+/** * ACTUALIZAR PERFIL */
+export function actualizarPerfil(datosNuevos) {
     const usuario = cargarUsuario();
     if (!usuario) return null;
 
-    // Fusiona los datos antiguos con los nuevos
-    const usuarioActualizado = { ...usuario, ...nuevosDatos };
-    guardarUsuario(usuarioActualizado);
+    const actualizado = {
+        ...usuario,
+        ...datosNuevos
+    };
 
-    Swal.fire({
-        title: 'Perfil Actualizado',
-        text: 'Tus cambios se han guardado correctamente.',
-        icon: 'success',
-        confirmButtonColor: '#9d4edd'
-    });
-    
-    return usuarioActualizado; 
+    guardarUsuario(actualizado);
+    return actualizado;
 }
 
-/* CRUD: ELIMINAR SUSCRIPCIÓN */
-export function cancelarSuscripcion(animeId) {
-    const usuario = cargarUsuario();
-    if (!usuario || !usuario.suscripciones) return;
-
-    usuario.suscripciones = usuario.suscripciones.filter(anime => anime.id !== animeId);
-    guardarUsuario(usuario);
-
-    Swal.fire({
-        title: 'Eliminado',
-        text: 'El anime se ha quitado de tu lista.',
-        icon: 'success',
-        confirmButtonColor: '#9d4edd',
-        timer: 1500,
-        showConfirmButton: false
-    });
-}
-
-/* ASIGNACIÓN DE PLANES */
+/** * GESTIONAR PLAN (Asignar o Cambiar) */
 export function asignarPlan(idPlan, catalogo) {
     const usuario = cargarUsuario();
     if (!usuario) return null;
 
-    const plan = catalogo.find(p => p.id === Number(idPlan));
-    
-    if (!plan) return null;
+    const planEncontrado = catalogo.find(p => p.id === Number(idPlan));
+    if (!planEncontrado) return null;
 
-    usuario.planContratado = plan;
-    usuario.suscrito = false; 
-    
-    guardarUsuario(usuario);
-    return usuario; 
+    const actualizado = {
+        ...usuario,
+        planContratado: planEncontrado,
+        suscrito: false 
+    };
+
+    guardarUsuario(actualizado);
+    return actualizado;
 }
 
-/* CONFIRMACIÓN DE PAGO */
+/** * CANCELAR PLAN CONTRATADO*/
+export function cancelarPlanActivo() {
+    const usuario = cargarUsuario();
+    if (!usuario) return null;
+
+    const actualizado = {
+        ...usuario,
+        planContratado: null,
+        suscrito: false
+    };
+
+    guardarUsuario(actualizado);
+    return actualizado;
+}
+
+/** * CONFIRMAR PAGO*/
 export function confirmarPagoPlan() {
     const usuario = cargarUsuario();
-    
-    // No permitir pago si no hay un plan seleccionado
-    if (!usuario || !usuario.planContratado) {
-        console.error("No hay un plan seleccionado para confirmar.");
-        return null;
+    if (!usuario || !usuario.planContratado) return null;
+
+    const actualizado = {
+        ...usuario,
+        suscrito: true
+    };
+
+    guardarUsuario(actualizado);
+    return actualizado;
+}
+
+/** * GESTIONAR ANIME (Favoritos/Suscripciones internas) 
+ */
+export function gestionarSuscripcionAnime(anime) {
+    const usuario = cargarUsuario();
+    if (!usuario) return { success: false, message: "Usuario no identificado" };
+
+    const existe = usuario.suscripciones.some(item => item.id === anime.id);
+
+    if (existe) {
+        return { success: false, message: "Este anime ya está en tu lista" };
     }
 
-    usuario.suscrito = true; 
-    guardarUsuario(usuario); 
-    
-    return usuario; 
+    usuario.suscripciones.push(anime);
+    guardarUsuario(usuario);
+
+    return { success: true, message: "Agregado a tu catálogo personal" };
+}
+
+export function quitarAnimeDeLista(id) {
+    const usuario = cargarUsuario();
+    if (!usuario) return null;
+
+    const actualizado = {
+        ...usuario,
+        suscripciones: usuario.suscripciones.filter(anime => anime.id !== id)
+    };
+
+    guardarUsuario(actualizado);
+    return actualizado;
 }

@@ -1,26 +1,73 @@
-/* Lógica para la página de reproducción */
+/** LÓGICA PARA LA PÁGINA DE REPRODUCCIÓN */
+import { qs } from "../utils/dom.js";
+
+/**Carga los detalles del anime desde el almacenamiento local */
 const cargarDetallesAnime = () => {
     const animeEnMemoria = localStorage.getItem('selectedAnime');
     
+    // Si no hay anime, redirigimos al catálogo
     if (!animeEnMemoria) {
-        console.error("No se encontró ningún anime seleccionado.");
-        window.location.href = 'catalog.html';
+        console.warn("Acceso denegado: No hay anime seleccionado.");
+        location.replace('catalog.html');
         return;
     }
 
-    const anime = JSON.parse(animeEnMemoria);
+    let anime;
+    try {
+        anime = JSON.parse(animeEnMemoria);
+    } catch (error) {
+        console.error("Error de integridad de datos:", error);
+        localStorage.removeItem('selectedAnime');
+        location.replace('catalog.html');
+        return;
+    }
 
-    const titleElement = document.getElementById('anime-title');
-    const descriptionElement = document.getElementById('anime-description');
-    const videoElement = document.getElementById('main-video');
+    // Validación de objeto
+    if (!anime || !anime.nombre) {
+        location.replace('catalog.html');
+        return;
+    }
 
-    if (titleElement) titleElement.textContent = anime.nombre;
-    if (descriptionElement) descriptionElement.textContent = anime.descripcion;
+    // Referencia a nodos específicos
+    const titleElement = qs('#video-title'); 
+    const videoElement = qs('#main-video');
+    const descriptionElement = qs('#video-description');
 
-    if (videoElement) {
-        videoElement.src = anime.videoUrl || ''; 
-        videoElement.poster = anime.imagen; 
+    // Verificación de existencia de nodos
+    if (!titleElement || !videoElement) {
+        console.error("Error: Nodos del reproductor no encontrados en el DOM.");
+        return;
+    }
+
+    // Inyección segura de datos
+    titleElement.textContent = anime.nombre;
+    
+    if (descriptionElement) {
+        descriptionElement.textContent = anime.descripcion || "Sin descripción disponible.";
+    }
+
+    // Configuración del reproductor de video
+    videoElement.src = anime.videoUrl || "";
+    videoElement.poster = anime.banner || anime.imagen || ""; 
+    
+    // Manejo de errores de carga de video
+    videoElement.addEventListener("error", () => {
+        console.warn(`No se pudo cargar el recurso de video: ${anime.videoUrl}`);
+    });
+};
+
+/**Función de inicialización*/
+const initPlayer = () => {
+    cargarDetallesAnime();
+    
+    // botón de volver
+    const btnBack = qs("#btn-back");
+    if (btnBack) {
+        btnBack.addEventListener("click", () => {
+            location.assign("catalog.html");
+        });
     }
 };
 
-document.addEventListener('DOMContentLoaded', cargarDetallesAnime);
+// Ejecución directa
+initPlayer();

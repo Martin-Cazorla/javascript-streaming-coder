@@ -2,37 +2,66 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <title>Reproductor | KaijuStream</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaijuStream - Reproductor</title>
-    <link rel="stylesheet" href="../css/style.css"> 
+    <meta name="description" content="Disfruta de tus animes favoritos en KaijuStream.">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../assets/favicon.ico">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="catalog.html" class="btn-back">Volver al Catálogo</a>
+    <header class="site-header">
+        <nav class="header-container">
+            <a href="../index.html" class="logo-text">KaijuStream</a>
         </nav>
     </header>
 
-    <main id="player-container">
-        <section class="video-section">
-            <h1 id="anime-title">Cargando anime...</h1>
+    <main>
+        <section class="player-container" aria-labelledby="video-title">
+            <h2 id="video-title">Cargando video...</h2>
             
             <div class="video-wrapper">
-                <video id="main-video" controls poster="">
-                    <source src="" type="video/mp4">
-                    Tu navegador no soporta la reproducción de videos.
+                <video id="main-video" controls aria-describedby="video-title">
+                    <p>Tu navegador no soporta videos HTML5. Aquí hay un <a href="#">enlace al video</a>.</p>
                 </video>
             </div>
 
-            <article class="anime-info">
-                <h2>Sinopsis</h2>
-                <p id="anime-description">Cargando descripción...</p>
-                <div id="anime-tags">
-                    </div>
-            </article>
+            <div class="video-controls-info">
+                <button id="btn-back" type="button" class="btn-secondary">
+                    ← Volver al Catálogo
+                </button>
+            </div>
         </section>
     </main>
 
-    <script src="../js/pages/player.js"></script>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="assets/logo-kaijustream.png" alt="KaijuStream" class="footer-logo">
+                <p>La mejor plataforma de streaming para los amantes del anime y los Kaijus.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="pages/catalog.html">Catálogo</a></li>
+                    <li><a href="#">Planes</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Soporte</h4>
+                <ul>
+                    <li><a href="#">Ayuda</a></li>
+                    <li><a href="#">Términos</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 KaijuStream. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="../js/pages/player.js"></script>
 </body>
 </html>
