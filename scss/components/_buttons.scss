@@ -1,4 +1,5 @@
 @use "../abstracts/variables" as *;
+@use "sass:color";
 
 /* =========================================
     BOTONES GLOBALES
@@ -31,12 +32,10 @@ button,
 
 /* VARIANTES DE BOTONES */
 
-// Botón de ancho completo para el catálogo
 .btn-suscribir {
     width: 100%;
 }
 
-// Variante transparente para acciones secundarias
 .btn-secundario {
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -47,20 +46,18 @@ button,
     }
 }
 
-// Variante para eliminación o alertas
 .btn-cancelar {
     background: none;
     color: $color-danger;
     border: 1px solid transparent;
 
     &:hover {
-        color: lighten($color-danger, 10%);
+        color: color.scale($color-danger, $lightness: 10%);
         background: rgba($color-danger, 0.1);
         border-color: rgba($color-danger, 0.2);
     }
 }
 
-// Clase de utilidad para ocultar elementos
 .hidden {
     display: none !important;
 }

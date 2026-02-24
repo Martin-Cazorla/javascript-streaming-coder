@@ -1,48 +1,44 @@
 @use "../abstracts/variables" as *;
-// Estructura base para todas las tarjetas (Planes y Animes)
-.card {
+
+%card-styles {
     background: $card-bg;
     border-radius: 14px;
     border: 1px solid $card-border;
     padding: 1.8rem;
     backdrop-filter: blur(12px);
-    transition: all .3s ease;
+    transition: $transition-smooth;
     position: relative;
     overflow: hidden;
     z-index: 1;
 
-    h1, h2, h3, p, button, form, span {
-        position: relative; 
-        z-index: 10; 
-    }
+    h4 { margin-bottom: 0.5rem; }
 
-    /*Efecto de iluminación en el borde superior */
-    &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at top,
-                                    rgba($primary-color, .15),
-                                    transparent 70%);
-        opacity: 0;
-        transition: .3s;
-        z-index: -1; 
-    }
-
-    &:hover {
-        border-color: rgba($primary-color, 0.4);
-        &::before { opacity: 1; }
+    p {
+        margin-top: 1rem;
+        color: $text-muted;
+        font-size: 0.85rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 }
 
-// Específico para el catálogo de animes
+.card {
+    @extend %card-styles;
+    
+    &:hover {
+        transform: translateY(-10px);
+        border-color: $primary-color;
+    }
+}
 
 .anime-card {
-    @extend .card;
+    @extend %card-styles;
     padding: 0;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(v.$primary-color, 0.1);
+    border: 1px solid rgba($primary-color, 0.1);
 
     .anime-img {
         width: 100%;
@@ -54,61 +50,21 @@
     .anime-info {
         padding: 1.5rem;
         background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-        
-        h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: white;
-        }
-
-        .badge {
-            background: v.$primary-color;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-        }
-
-        p {
-            margin-top: 1rem;
-            color: v.$text-muted;
-            font-size: 0.85rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+        h4 { color: white; font-size: 1.2rem; }
     }
 
     &:hover {
-        transform: translateY(-10px);
-        border-color: v.$primary-color;
-        
-        .anime-img {
-            transform: scale(1.05);
-        }
+        border-color: $primary-color;
+        .anime-img { transform: scale(1.05); }
     }
 }
 
-// Específico para los planes de suscripción
 .plan-card {
-    @extend .card;
+    @extend %card-styles;
     background: rgba(0, 0, 0, .75);
     text-align: center;
 
     &:hover {
         transform: translateY(-5px) scale(1.03);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, .6);
-    }
-
-    &.active {
-        border: 2px solid $primary-color;
-        box-shadow: 0 0 20px rgba($primary-color, 0.3);
-        
-        .btn-disabled {
-            background: $primary-color;
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
     }
 }
