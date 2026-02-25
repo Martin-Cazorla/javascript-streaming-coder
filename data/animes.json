@@ -7,7 +7,7 @@
         "descripcion": "Monkey D. Luffy busca el tesoro legendario One Piece para convertirse en el Rey de los Piratas.",
         "imagen": "../assets/images/one-piece.jpg",
         "banner": "../assets/images/banners/one-piece-bg.jpg",
-        "videoUrl": "../assets/video/one-piece-trailer.mp4",
+        "videoUrl": "https://www.youtube.com/embed/7gYGFiEjZqk",
         "anio": 1999,
         "rating": 8.9
     },
@@ -19,7 +19,7 @@
         "descripcion": "La humanidad lucha por sobrevivir contra los titanes gigantes.",
         "imagen": "../assets/images/aot.jpg",
         "banner": "../assets/images/banners/aot-bg.jpg",
-        "videoUrl": "../assets/video/aot-trailer.mp4",
+        "videoUrl": "https://www.youtube.com/embed/ECIr_Gz_FNA",
         "anio": 2013,
         "rating": 9.1
     },
@@ -31,7 +31,7 @@
         "descripcion": "Naruto regresa para cumplir su sueño de convertirse en Hokage.",
         "imagen": "../assets/images/naruto.jpg",
         "banner": "../assets/images/banners/naruto-bg.jpg",
-        "videoUrl": "../assets/video/naruto-trailer.mp4",
+        "videoUrl": "https://www.youtube.com/embed/_sdXlY7Zs3I",
         "anio": 2007,
         "rating": 8.7
     },
@@ -43,7 +43,7 @@
         "descripcion": "Tanjiro Kamado lucha contra demonios para salvar a su hermana.",
         "imagen": "../assets/images/demon-slayer.jpg",
         "banner": "../assets/images/banners/demon-slayer-bg.jpg",
-        "videoUrl": "../assets/video/demon-slayer-trailer.mp4",
+        "videoUrl": "https://www.youtube.com/embed/cXqJE-aIvUs",
         "anio": 2019,
         "rating": 8.8
     },
@@ -55,7 +55,7 @@
         "descripcion": "Light Yagami obtiene un cuaderno capaz de matar a cualquier persona.",
         "imagen": "../assets/images/death-note.jpg",
         "banner": "../assets/images/banners/death-note-bg.jpg",
-        "videoUrl": "../assets/video/death-note-trailer.mp4",
+        "videoUrl": "https://www.youtube.com/embed/EYhM0WDEv7k",
         "anio": 2006,
         "rating": 9.0
     },
@@ -67,7 +67,7 @@
         "descripcion": "Yuji Itadori entra en el mundo de las maldiciones.",
         "imagen": "../assets/images/jujutsu.jpg",
         "banner": "../assets/images/banners/jujutsu-bg.jpg",
-        "videoUrl": "../assets/video/jujutsu-trailer.mp4",
+        "videoUrl": "https://www.youtube.com/embed/vrwfUpacu78",
         "anio": 2020,
         "rating": 8.7
     },
@@ -79,7 +79,7 @@
         "descripcion": "Izuku Midoriya busca convertirse en el héroe número uno.",
         "imagen": "../assets/images/boku-no-hero.jpg",
         "banner": "../assets/images/banners/mha-bg.jpg",
-        "videoUrl": "../assets/video/mha-trailer.mp4",
+        "videoUrl": "https://www.youtube.com/embed/0o428b2xbPo",
         "anio": 2016,
         "rating": 8.5
     },
@@ -91,7 +91,7 @@
         "descripcion": "Asta busca convertirse en el Rey Mago.",
         "imagen": "../assets/images/black-clover.jpg",
         "banner": "../assets/images/banners/black-clover-bg.jpg",
-        "videoUrl": "../assets/video/black-clover-trailer.mp4",
+        "videoUrl": "https://www.youtube.com/embed/DOyYcjQlUQ8",
         "anio": 2017,
         "rating": 8.3
     }

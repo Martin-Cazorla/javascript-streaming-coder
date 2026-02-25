@@ -709,8 +709,8 @@ LOGIN PAGE
 }
 
 /* =========================================
-PLAYER PAGE
-========================================= */
+    PLAYER PAGE
+   ========================================= */
 .player-container {
   max-width: 1200px;
   margin: 40px auto;
@@ -718,54 +718,63 @@ PLAYER PAGE
   min-height: 80vh;
 }
 
-.video-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.video-section h1 {
+#video-title {
   color: #9d4edd;
-  font-size: 2rem;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
 }
 
 .video-wrapper {
   width: 100%;
-  background: black;
+  position: relative;
+  background: #000;
   border-radius: 12px;
   overflow: hidden;
-}
-
-.video-wrapper video {
-  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   aspect-ratio: 16/9;
 }
-
-.anime-info {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 20px;
-  border-radius: 10px;
+.video-wrapper iframe, .video-wrapper video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
-.anime-info h2 {
+.video-controls-info {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* BOTÓN VOLVER*/
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 2px solid #9d4edd;
   color: white;
-  margin-bottom: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
-
-.anime-info p {
-  color: #ccc;
-}
-
-/* BOTON VOLVER */
-.btn-back {
-  display: inline-block;
-  margin: 20px;
-  padding: 10px 20px;
-  border: 1px solid #9d4edd;
-  color: white;
-  text-decoration: none;
-}
-
-.btn-back:hover {
+.btn-secondary:hover {
   background: #9d4edd;
+  transform: translateY(-2px);
+}
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #video-title {
+    font-size: 1.5rem;
+  }
+  .player-container {
+    margin: 20px auto;
+  }
 }/*# sourceMappingURL=style.css.map */
